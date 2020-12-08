@@ -1,4 +1,5 @@
 import React from 'react'
+import Auth from './Auth'
 
 const Header = () => {
     return (
@@ -7,7 +8,7 @@ const Header = () => {
                 <img src="/img/SpotiQuiz_150px.png" width="30" height="30" className="d-inline-block align-top" alt="" />
                 SpotiQuiz
             </a>
-            <a href="/login">Login</a>
+            <Auth />
         </nav>
     )
 }
