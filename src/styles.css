@@ -84,3 +84,7 @@ footer {
 .main {
     flex: 1 0 auto;
 }
+
+.margin-right-short {
+    margin-right: 5px;
+}

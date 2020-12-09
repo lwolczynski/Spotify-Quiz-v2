@@ -1,14 +1,14 @@
 import React from 'react'
-import Auth from './Auth'
+import { Link } from 'react-router-dom'
 
-const Header = () => {
+const Header = ({ children }) => {
     return (
         <nav className="navbar navbar-light">
-            <a className="navbar-brand" href="#">
-                <img src="/img/SpotiQuiz_150px.png" width="30" height="30" className="d-inline-block align-top" alt="" />
+            <Link to="/" className="navbar-brand">
+                <img src="/favicon.ico" width="30" height="30" className="d-inline-block align-top margin-right-short" alt="" />
                 SpotiQuiz
-            </a>
-            <Auth />
+            </Link>
+            { children }
         </nav>
     )
 }
