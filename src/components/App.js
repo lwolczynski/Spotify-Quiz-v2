@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Link } from 'react-router-dom'
 import Header from './Header'
 import Auth from './Auth'
 import Main from './Main'
+import List from './List'
 import Login from './Login'
 import Logout from './Logout'
 import Footer from './Footer'
@@ -20,6 +21,7 @@ const App = () => {
                     <Auth authorized={authorized} />
                 </Header>
                 <Route path="/" exact component={Main} />
+                <Route path="/list" exact component={List} />
                 <Route path="/callback" component={() => <Login setAuthorized={setAuthorized} />} />
                 <Route path="/logout" component={() => <Logout setAuthorized={setAuthorized} />} />
                 <Footer />
