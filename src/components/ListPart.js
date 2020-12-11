@@ -1,26 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Accordion, Card } from 'react-bootstrap'
+import Tile from './Tile'
 
-const ListPart = () => {
+const ListPart = ({ name, num, storage, url }) => {
+    
+    const [playlists, setPlaylists] = useState(JSON.parse(localStorage.getItem(storage)).items || [])
+
+    const renderTiles = () => {
+
+        if (!playlists) {
+            return ""
+        }
+
+        return playlists.map((item, index) => {
+            let img;
+            try {
+                img = item.images[0].url;
+            } catch (err) {
+                img = "/img/covers/no_cover.png";
+            }
+            return (
+                <Tile img={img} name={item.name} tracks={item.tracks.href} key={item.id} />
+            )
+        })
+    }
+
     return (
         <Card>
-            {/* <div class="card-header" id="headingOne">
-                <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#activityBased" aria-expanded="true" aria-controls="activityBased">
-                        Activity Based Playlists
-                    </button>
+            <Accordion.Toggle as={Card.Header} eventKey={num}>                
+                <h5 className="mb-0">
+                    <button className="btn btn-link">{name}</button>
                 </h5>
-            </div>
-            <div id="activityBased" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                <ul class="card-body album-container">
-                </ul>
-            </div> */}
-            <Accordion.Toggle as={Card.Header} eventKey="0">
-                TAB 1
             </Accordion.Toggle>
-
-            <Accordion.Collapse eventKey="0">
-                <Card.Body>This is first tab body</Card.Body>
+            <Accordion.Collapse eventKey={num}>
+                <ul className="card-body album-container">
+                    {renderTiles()}
+                </ul>
             </Accordion.Collapse>
         </Card>
     )
