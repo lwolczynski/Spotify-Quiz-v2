@@ -2,11 +2,11 @@ import cryptoBrowserify from 'crypto-browserify';
 
 const scopes = 'user-top-read playlist-read-collaborative playlist-read-private user-read-private user-read-email user-read-recently-played';
 
-const accessToken = window.localStorage.getItem('accessToken');
-const refreshToken = window.localStorage.getItem('refreshToken');
-let tokens = accessToken === null ? null : {
-    accessToken,
-    refreshToken,
+const access_token = window.localStorage.getItem('access_token');
+const refresh_token = window.localStorage.getItem('refresh_token');
+let tokens = access_token === null ? null : {
+    access_token,
+    refresh_token
 };
 
 const base64URLEncode = str => {
@@ -44,7 +44,7 @@ export const loginUrl =
     '&redirect_uri=' + redirectUrl
 
 export const refreshTokens = async refreshToken => {
-    const body = `grant_type=refresh_token&client_id=${clientId}&refresh_token=${refreshToken}`;
+    const body = `grant_type=refresh_token&client_id=${clientId}&refresh_token=${refresh_token}`;
     const response = await fetch(tokenUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -54,11 +54,11 @@ export const refreshTokens = async refreshToken => {
         throw Error();
     }
     const { access_token, id_token } = await response.json();
-    window.localStorage.setItem('accessToken', access_token);
-    window.localStorage.setItem('refreshToken', refreshToken);
+    window.localStorage.setItem('access_token', access_token);
+    window.localStorage.setItem('refresh_token', refresh_token);
     tokens = {
-        accessToken: access_token,
-        refreshToken
+        access_token,
+        refresh_token
     };
 };
 
@@ -73,17 +73,20 @@ export const login = async code => {
         throw Error();
     }
     const { access_token, refresh_token } = await response.json();
-    window.localStorage.setItem('accessToken', access_token);
-    window.localStorage.setItem('refreshToken', refresh_token);
+    window.localStorage.setItem('access_token', access_token);
+    window.localStorage.setItem('refresh_token', refresh_token);
     tokens = {
-        accessToken: access_token,
-        refreshToken: refresh_token,
+        access_token,
+        refresh_token
     };
 };
 
 export const logout = async () => {
-  window.localStorage.removeItem('accessToken');
-  window.localStorage.removeItem('refreshToken');
+  window.localStorage.removeItem('access_token');
+  window.localStorage.removeItem('refresh_token');
+  window.localStorage.removeItem('activity_playlists');
+  window.localStorage.removeItem('user_playlists');
+  window.localStorage.removeItem('top_playlists');
   tokens = null;
 };
 

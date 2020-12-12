@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Accordion, Card } from 'react-bootstrap'
-import { IconContext } from "react-icons"
-import { FaRedoAlt } from 'react-icons/fa'
 import Tile from './Tile'
-import { getAllPlaylists } from '../api/api.js'
+import personalized_playlists from './PersonalizedPlaylists.js'
 
-const ListPart = ({ name, num, storage, url }) => {
+const ActivityPart = ({ name, num, storage }) => {
     //MAKE LOCAL STORAGE DEFAULT STATE SOMEHOW!!!
     const [playlists, setPlaylists] = useState([])
 
@@ -14,27 +12,21 @@ const ListPart = ({ name, num, storage, url }) => {
             const savedData = window.localStorage.getItem(storage);
             setPlaylists(JSON.parse(savedData).items);
         } catch (err) {
-            fetchPlaylists(storage, url);
+            fetchPlaylists(storage);
         }
     }, [])
 
 
-    const fetchPlaylists = async (storage, url) => {
-        const fetchedPlaylists = await getAllPlaylists(url);
-        window.localStorage.setItem(storage, JSON.stringify(fetchedPlaylists));
-        setPlaylists(fetchedPlaylists.items);
+    const fetchPlaylists = (storage) => {
+        const fetchedPlaylists = window.localStorage.setItem(storage, JSON.stringify(personalized_playlists));
+        setPlaylists(personalized_playlists.items);
     }
 
 
     const renderTiles = () => {
 
         return playlists.map((item, index) => {
-            let img;
-            try {
-                img = item.images[0].url;
-            } catch (err) {
-                img = "/img/covers/no_cover.png";
-            }
+            const img = item.images[0].url;
             return (
                 <Tile img={img} name={item.name} tracks={item.tracks.href} key={item.id} />
             )
@@ -44,12 +36,9 @@ const ListPart = ({ name, num, storage, url }) => {
     return (
         <Card>
             <Accordion.Toggle as={Card.Header} eventKey={num}>                
-                <button className="btn btn-link">{name}</button>
-                <button onClick={() => fetchPlaylists(storage, url)} className="btn btn-link float-right">
-                    <IconContext.Provider  value={{ style: { opacity: '0.5' } }}>
-                        <FaRedoAlt />
-                    </IconContext.Provider>
-                </button>
+                <h5 className="mb-0">
+                    <button className="btn btn-link">{name}</button>
+                </h5>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={num}>
                 <ul className="card-body album-container">
@@ -60,4 +49,4 @@ const ListPart = ({ name, num, storage, url }) => {
     )
 }
 
-export default ListPart
+export default ActivityPart

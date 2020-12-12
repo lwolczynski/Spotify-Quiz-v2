@@ -43,7 +43,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .album-tile-button {
-    height: 100%;
     width: 100%;
 	padding: 5px;
 }
@@ -52,17 +51,12 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #a5eeaf;
 }
 
-/* .album-tile-form {
-    height: 100%;
-} */
-
 .album-name {
     font-size: smaller;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     display: block;
-    height: 100%;
 }
 
 .card-header {
