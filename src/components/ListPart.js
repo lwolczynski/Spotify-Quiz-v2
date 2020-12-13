@@ -21,8 +21,10 @@ const ListPart = ({ name, num, storage, url }) => {
 
     const fetchPlaylists = async (storage, url) => {
         const fetchedPlaylists = await getAllPlaylists(url);
-        window.localStorage.setItem(storage, JSON.stringify(fetchedPlaylists));
-        setPlaylists(fetchedPlaylists.items);
+        if (fetchedPlaylists) {
+            window.localStorage.setItem(storage, JSON.stringify(fetchedPlaylists));
+            setPlaylists(fetchedPlaylists.items);
+        }
     }
 
 

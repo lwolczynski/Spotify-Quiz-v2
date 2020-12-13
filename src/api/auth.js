@@ -2,11 +2,11 @@ import cryptoBrowserify from 'crypto-browserify';
 
 const scopes = 'user-top-read playlist-read-collaborative playlist-read-private user-read-private user-read-email user-read-recently-played';
 
-const access_token = window.localStorage.getItem('access_token');
-const refresh_token = window.localStorage.getItem('refresh_token');
-let tokens = access_token === null ? null : {
-    access_token,
-    refresh_token
+const accessToken = window.localStorage.getItem('access_token');
+const refreshToken = window.localStorage.getItem('refresh_token');
+let tokens = accessToken === null ? null : {
+    'access_token': accessToken,
+    'refresh_token': refreshToken
 };
 
 const base64URLEncode = str => {
@@ -43,8 +43,9 @@ export const loginUrl =
     '&scope=' + encodeURIComponent(scopes) +
     '&redirect_uri=' + redirectUrl
 
-export const refreshTokens = async refreshToken => {
-    const body = `grant_type=refresh_token&client_id=${clientId}&refresh_token=${refresh_token}`;
+export const refreshTokens = async () => {
+    const refreshToken = window.localStorage.getItem('refresh_token');
+    const body = `grant_type=refresh_token&client_id=${clientId}&refresh_token=${refreshToken}`;
     const response = await fetch(tokenUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -53,7 +54,7 @@ export const refreshTokens = async refreshToken => {
     if (!response.ok) {
         throw Error();
     }
-    const { access_token, id_token } = await response.json();
+    const { access_token, refresh_token } = await response.json();
     window.localStorage.setItem('access_token', access_token);
     window.localStorage.setItem('refresh_token', refresh_token);
     tokens = {

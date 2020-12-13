@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { filterItemsByKeys, reduceToOneKey } from '../utils/utils.js';
+import { refreshTokens } from './auth.js';
 
 const getItems = (url) => {
   return axios({
@@ -18,9 +19,16 @@ const getItems = (url) => {
 const getAllPlaylists = async (url, all = []) => {
 //  await checkTokenValidity();
   let newData;
-  await getItems(url).then((res) => {
-    newData = res.data;
-  });
+  await getItems(url)
+    .then((res) => {
+      newData = res.data;
+    })
+    .catch(async (err) => {
+      console.log(err)
+      await refreshTokens()
+      return getAllPlaylists(url, all)
+    });
+  if (!newData) return
   const items = newData.items ? newData.items : newData.playlists.items;
   // Pick only relevant keys from items
   const filteredKeys = ["href", "id", "images", "name", "tracks"];
@@ -31,24 +39,15 @@ const getAllPlaylists = async (url, all = []) => {
 const getAllTracks = async (url, all = []) => {
 //  await checkTokenValidity();
   let newData;
-  await getItems(url).then((res) => {
-    newData = res.data;
-  });
+  await getItems(url)
+    .then((res) => {
+      newData = res.data;
+    })
+    .catch((err) => {
+      console.log(err)
+    });
   all = all.concat(reduceToOneKey(newData.items, "track"));
   return (newData.next) ? await getAllTracks(newData.next, all) : {"items": all};
 }
-
-// const checkTokenValidity = async () => {
-//   const access_token = getCookie('access_token')
-//   if (!access_token) {
-//     axios({
-//       url: '/refresh',
-//       method: 'get'
-//     }).then((res) => {
-//       setCookie('access_token', res.data.access_token, res.data.max_age);
-//       updateCookieExpiry('refresh_token', 3600*24);
-//     })
-//   }
-// }
 
 export { getAllPlaylists, getAllTracks };
