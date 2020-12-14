@@ -5,15 +5,17 @@ import personalized_playlists from './PersonalizedPlaylists.js'
 
 const ActivityPart = ({ name, num, storage }) => {
     //MAKE LOCAL STORAGE DEFAULT STATE SOMEHOW!!!
-    const [playlists, setPlaylists] = useState([])
-
-    useEffect(() => {
+    const [playlists, setPlaylists] = useState(() => {
         try {
             const savedData = window.localStorage.getItem(storage);
-            setPlaylists(JSON.parse(savedData).items);
+            return JSON.parse(savedData).items;
         } catch (err) {
-            fetchPlaylists();
+            return []
         }
+    })
+
+    useEffect(() => {
+        if (localStorage.getItem(storage) === null) fetchPlaylists();
     }, [])
 
 

@@ -8,16 +8,18 @@ import { getAllPlaylists } from '../api/api.js'
 
 const ListPart = ({ name, num, storage, url }) => {
     //MAKE LOCAL STORAGE DEFAULT STATE SOMEHOW!!!
-    const [playlists, setPlaylists] = useState([])
+    const [playlists, setPlaylists] = useState(() => {
+        try {
+            const savedData = window.localStorage.getItem(storage);
+            return JSON.parse(savedData).items;
+        } catch (err) {
+            return []
+        }
+    })
     const accordionValue = useContext(AccordionContext);
 
     useEffect(() => {
-        try {
-            const savedData = window.localStorage.getItem(storage);
-            setPlaylists(JSON.parse(savedData).items);
-        } catch (err) {
-            fetchPlaylists();
-        }
+        if (localStorage.getItem(storage) === null) fetchPlaylists();
     }, [])
 
     const fetchPlaylists = async () => {
