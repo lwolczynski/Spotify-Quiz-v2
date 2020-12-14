@@ -12,12 +12,12 @@ const ActivityPart = ({ name, num, storage }) => {
             const savedData = window.localStorage.getItem(storage);
             setPlaylists(JSON.parse(savedData).items);
         } catch (err) {
-            fetchPlaylists(storage);
+            fetchPlaylists();
         }
     }, [])
 
 
-    const fetchPlaylists = (storage) => {
+    const fetchPlaylists = () => {
         const fetchedPlaylists = window.localStorage.setItem(storage, JSON.stringify(personalized_playlists));
         setPlaylists(personalized_playlists.items);
     }

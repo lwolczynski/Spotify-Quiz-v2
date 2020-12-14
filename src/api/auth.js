@@ -76,6 +76,6 @@ export const logout = async () => {
 };
 
 export const checkAuth = () => {
-    const refreshToken = window.localStorage.getItem('refresh_token');
-    return refreshToken ? true : false
+    const accessToken = window.localStorage.getItem('access_token');
+    return accessToken ? true : false
 };

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Accordion, Card } from 'react-bootstrap'
+import AccordionContext from 'react-bootstrap/AccordionContext'
 import { IconContext } from "react-icons"
 import { FaRedoAlt } from 'react-icons/fa'
 import Tile from './Tile'
@@ -8,18 +9,18 @@ import { getAllPlaylists } from '../api/api.js'
 const ListPart = ({ name, num, storage, url }) => {
     //MAKE LOCAL STORAGE DEFAULT STATE SOMEHOW!!!
     const [playlists, setPlaylists] = useState([])
+    const accordionValue = useContext(AccordionContext);
 
     useEffect(() => {
         try {
             const savedData = window.localStorage.getItem(storage);
             setPlaylists(JSON.parse(savedData).items);
         } catch (err) {
-            fetchPlaylists(storage, url);
+            fetchPlaylists();
         }
     }, [])
 
-
-    const fetchPlaylists = async (storage, url) => {
+    const fetchPlaylists = async () => {
         const fetchedPlaylists = await getAllPlaylists(url);
         if (fetchedPlaylists) {
             window.localStorage.setItem(storage, JSON.stringify(fetchedPlaylists));
@@ -27,6 +28,12 @@ const ListPart = ({ name, num, storage, url }) => {
         }
     }
 
+    const refresh = async (e) => {
+        if (accordionValue === num) {
+            e.stopPropagation()
+        }
+        fetchPlaylists()
+    }
 
     const renderTiles = () => {
 
@@ -47,7 +54,7 @@ const ListPart = ({ name, num, storage, url }) => {
         <Card>
             <Accordion.Toggle as={Card.Header} eventKey={num}>                
                 <button className="btn btn-link">{name}</button>
-                <button onClick={() => fetchPlaylists(storage, url)} className="btn btn-link float-right">
+                <button onClick={(e) => refresh(e)} className="btn btn-link float-right">
                     <IconContext.Provider  value={{ style: { opacity: '0.5' } }}>
                         <FaRedoAlt />
                     </IconContext.Provider>
