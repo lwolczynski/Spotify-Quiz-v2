@@ -2,13 +2,6 @@ import cryptoBrowserify from 'crypto-browserify';
 
 const scopes = 'user-top-read playlist-read-collaborative playlist-read-private user-read-private user-read-email user-read-recently-played';
 
-const accessToken = window.localStorage.getItem('access_token');
-const refreshToken = window.localStorage.getItem('refresh_token');
-let tokens = accessToken === null ? null : {
-    'access_token': accessToken,
-    'refresh_token': refreshToken
-};
-
 const base64URLEncode = str => {
   return str.toString('base64')
     .replace(/\+/g, '-')
@@ -57,10 +50,6 @@ export const refreshTokens = async () => {
     const { access_token, refresh_token } = await response.json();
     window.localStorage.setItem('access_token', access_token);
     window.localStorage.setItem('refresh_token', refresh_token);
-    tokens = {
-        access_token,
-        refresh_token
-    };
 };
 
 export const login = async code => {
@@ -76,10 +65,6 @@ export const login = async code => {
     const { access_token, refresh_token } = await response.json();
     window.localStorage.setItem('access_token', access_token);
     window.localStorage.setItem('refresh_token', refresh_token);
-    tokens = {
-        access_token,
-        refresh_token
-    };
 };
 
 export const logout = async () => {
@@ -88,7 +73,9 @@ export const logout = async () => {
   window.localStorage.removeItem('activity_playlists');
   window.localStorage.removeItem('user_playlists');
   window.localStorage.removeItem('top_playlists');
-  tokens = null;
 };
 
-export const getTokens = () => tokens;
+export const checkAuth = () => {
+    const refreshToken = window.localStorage.getItem('refresh_token');
+    return refreshToken ? true : false
+};

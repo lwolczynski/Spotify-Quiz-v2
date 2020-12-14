@@ -7,12 +7,10 @@ import List from './List'
 import Login from './Login'
 import Logout from './Logout'
 import Footer from './Footer'
-import { getTokens } from '../api/auth';
-
-const tokens = getTokens();
+import { checkAuth } from '../api/auth';
 
 const App = () => {
-    const [authorized, setAuthorized] = useState(tokens !== null)
+    const [authorized, setAuthorized] = useState(checkAuth())
 
     return (
         <>
