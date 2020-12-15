@@ -4,7 +4,7 @@ import AccordionContext from 'react-bootstrap/AccordionContext'
 import { IconContext } from "react-icons"
 import { FaRedoAlt } from 'react-icons/fa'
 import Tile from './Tile'
-import { getAllPlaylists } from '../api/api.js'
+import { getAllPlaylists } from '../../api/api.js'
 
 const ListPart = ({ name, num, storage, url }) => {
     const [playlists, setPlaylists] = useState(() => {

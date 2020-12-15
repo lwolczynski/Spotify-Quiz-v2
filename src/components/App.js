@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import Header from './Header'
 import Auth from './Auth'
 import Main from './Main'
-import List from './List'
+import List from './PlaylistsView/List'
 import Login from './Login'
 import Footer from './Footer'
 import { checkAuth } from '../api/auth';
