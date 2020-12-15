@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import Header from './Header'
 import Auth from './Auth'
 import Main from './Main'
 import List from './List'
 import Login from './Login'
-import Logout from './Logout'
 import Footer from './Footer'
 import { checkAuth } from '../api/auth';
 
@@ -16,12 +15,10 @@ const App = () => {
         <>
             <BrowserRouter>
                 <Header>
-                    <Auth authorized={authorized} />
+                    <Auth authorized={authorized} setAuthorized={setAuthorized} />
                 </Header>
-                <Route path="/" exact component={Main} />
-                <Route path="/list" exact component={List} />
+                <Route path="/" exact component={authorized ? List : Main} />
                 <Route path="/callback" component={() => <Login setAuthorized={setAuthorized} />} />
-                <Route path="/logout" component={() => <Logout setAuthorized={setAuthorized} />} />
                 <Footer />
             </BrowserRouter>
         </>

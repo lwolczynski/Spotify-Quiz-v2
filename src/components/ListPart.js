@@ -7,7 +7,6 @@ import Tile from './Tile'
 import { getAllPlaylists } from '../api/api.js'
 
 const ListPart = ({ name, num, storage, url }) => {
-    //MAKE LOCAL STORAGE DEFAULT STATE SOMEHOW!!!
     const [playlists, setPlaylists] = useState(() => {
         try {
             const savedData = window.localStorage.getItem(storage);

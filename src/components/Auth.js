@@ -1,19 +1,27 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { loginUrl } from '../api/auth';
+import { Redirect } from 'react-router-dom'
+import { loginUrl, logout } from '../api/auth';
+import Button from 'react-bootstrap/Button'
 
-const Auth = ({ authorized }) => {
+const Auth = ({ authorized, setAuthorized }) => {
 
     const renderAuthButton = () => {
         if (authorized === null) {
             return null;
         } else if (authorized) {
             return (
-                <Link to="/logout">Logout</Link>
+                <Button variant="link" onClick={() => {
+                    window.history.replaceState({}, document.title, '/');
+                    logout();
+                    setAuthorized(false);
+                    <Redirect to='/' />
+                }}>Logout</Button>
             )
         } else {
             return (
-                <a href={loginUrl}>Login</a>
+                <Button variant="link" onClick={() => {
+                    window.location.href = loginUrl
+                }}>Login</Button>
             )
         }
     }

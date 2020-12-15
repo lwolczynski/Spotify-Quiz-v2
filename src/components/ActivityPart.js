@@ -4,7 +4,6 @@ import Tile from './Tile'
 import personalized_playlists from './PersonalizedPlaylists.js'
 
 const ActivityPart = ({ name, num, storage }) => {
-    //MAKE LOCAL STORAGE DEFAULT STATE SOMEHOW!!!
     const [playlists, setPlaylists] = useState(() => {
         try {
             const savedData = window.localStorage.getItem(storage);
@@ -20,7 +19,7 @@ const ActivityPart = ({ name, num, storage }) => {
 
 
     const fetchPlaylists = () => {
-        const fetchedPlaylists = window.localStorage.setItem(storage, JSON.stringify(personalized_playlists));
+        window.localStorage.setItem(storage, JSON.stringify(personalized_playlists));
         setPlaylists(personalized_playlists.items);
     }
 

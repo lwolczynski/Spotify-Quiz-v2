@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { Redirect } from 'react-router-dom'
 import Loader from './Loader'
-import Main from './Main'
 import { login } from '../api/auth';
 
 const params = (new URL(document.location)).searchParams;
@@ -24,7 +24,7 @@ const Login = ({ setAuthorized }) => {
     }, []);
 
     return (
-        signingIn ? <Loader /> : <Main />
+        signingIn ? <Loader /> : <Redirect to='/' />
     )
 }
 

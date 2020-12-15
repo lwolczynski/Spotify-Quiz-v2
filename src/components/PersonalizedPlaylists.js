@@ -1,4 +1,4 @@
-export default
+const personalized_playlists =
 {
   "items":
     [
@@ -52,3 +52,5 @@ export default
       }
     ]
 }
+
+export default personalized_playlists
