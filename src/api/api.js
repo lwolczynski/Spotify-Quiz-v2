@@ -43,8 +43,10 @@ const getAllTracks = async (url, all = []) => {
     .then((res) => {
       newData = res.data;
     })
-    .catch((err) => {
+    .catch(async (err) => {
       console.log(err)
+      await refreshTokens()
+      return getAllPlaylists(url, all)
     });
   all = all.concat(reduceToOneKey(newData.items, "track"));
   return (newData.next) ? await getAllTracks(newData.next, all) : {"items": all};

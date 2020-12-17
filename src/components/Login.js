@@ -10,8 +10,8 @@ const Login = ({ setAuthorized }) => {
     const [signingIn, setSigningIn] = useState(true)
 
     useEffect(() => {
+        window.history.replaceState({}, document.title, '/');
         const execute = async () => {
-            window.history.replaceState({}, document.title, '/');
             try {
                 await login(code);
             } catch (err) {

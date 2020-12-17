@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ActivityPart from './ActivityPart'
 import ListPart from './ListPart'
 import { Accordion } from 'react-bootstrap'
 
 const List = () => {
+
+    useEffect(() => {
+        window.history.replaceState({}, document.title, '/');
+    }, []);
 
     return (
         <div className="container main">
