@@ -22,7 +22,7 @@ const getItems = async (url, initial, addMarket = false) => {
     .catch(async (err) => {
       console.log(err)
       await refreshTokens()
-      return getItems(url)
+      return getItems(url, initial, addMarket)
     });
 }
 
