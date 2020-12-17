@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import Loader from './Loader'
 import { login } from '../api/auth';
+import { getProfile } from '../api/api';
 
 const params = (new URL(document.location)).searchParams;
 const code = params.get('code');
@@ -14,6 +15,8 @@ const Login = ({ setAuthorized }) => {
         const execute = async () => {
             try {
                 await login(code);
+                const profile = await getProfile();
+                window.localStorage.setItem('market', profile.country)
             } catch (err) {
                 // do nothing
             }

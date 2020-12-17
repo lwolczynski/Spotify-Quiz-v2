@@ -73,6 +73,7 @@ export const logout = async () => {
   window.localStorage.removeItem('activity_playlists');
   window.localStorage.removeItem('user_playlists');
   window.localStorage.removeItem('top_playlists');
+  window.localStorage.removeItem('market');
 };
 
 export const checkAuth = () => {

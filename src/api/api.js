@@ -43,4 +43,8 @@ const getAllTracks = async (url, isRegularPlaylist, all = []) => {
   return (newData.next) ? await getAllTracks(newData.next, isRegularPlaylist, all) : {"items": all};
 }
 
-export { getAllPlaylists, getAllTracks };
+const getProfile = async () => {
+  return getItems('https://api.spotify.com/v1/me', true, false)
+}
+
+export { getAllPlaylists, getAllTracks, getProfile };
