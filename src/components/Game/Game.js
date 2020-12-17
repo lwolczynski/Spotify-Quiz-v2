@@ -1,10 +1,15 @@
 import React, { useState , useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Loader from '../Loader'
+import Track from './Track'
 import { getAllTracks } from '../../api/api.js'
+import Button from 'react-bootstrap/Button'
 
 const Game = () => {
     const [tracks, setTracks] = useState(null)
+    const [trackNumber, setTrackNumber] = useState(0)
+    const [score, setScore] = useState(0)
+    const [started, setStarted] = useState(false)
 
     const location = useLocation();
 
@@ -20,7 +25,7 @@ const Game = () => {
     const renderTracks = () => {
         return tracks.map((item) => {
             return (
-                <div>{item.name} by {item.artists[0].name}</div>
+                <Button variant="outline-dark" onClick={() => setTrackNumber(trackNumber+1)}>{item.name} by {item.artists[0].name}</Button>
             )
         })
     }
@@ -29,7 +34,20 @@ const Game = () => {
         tracks === null ? <Loader /> :        
         <div className="container main">
             <h1>{location.state.playlistName}</h1>
-            {renderTracks()}
+            <div className="row">
+                <div className="col-6">
+                    {started ? <Track track={tracks[trackNumber]} /> : <Button onClick={() => setStarted(true)}>Start</Button>}
+                </div>
+                <div className="col-6">
+                    <h3>Your score: {score}</h3>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col">
+                    <input />
+                    {renderTracks()}
+                </div>
+            </div>
         </div>
     )
 }
