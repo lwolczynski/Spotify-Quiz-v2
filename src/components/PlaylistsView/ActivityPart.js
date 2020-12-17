@@ -29,7 +29,7 @@ const ActivityPart = ({ name, num, storage }) => {
         return playlists.map((item, index) => {
             const img = item.images[0].url;
             return (
-                <Tile img={img} name={item.name} tracks={item.tracks.href} key={item.id} />
+                <Tile img={img} name={item.name} tracks={item.tracks.href} key={item.id} isRegularPlaylist={false} />
             )
         })
     }

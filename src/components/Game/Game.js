@@ -16,7 +16,7 @@ const Game = () => {
     useEffect(() => {
         window.history.replaceState({}, document.title, '/');
         const execute = async () => {
-            const fetchedTracks = await getAllTracks(location.state.playlistUrl);
+            const fetchedTracks = await getAllTracks(location.state.playlistUrl, location.state.isRegularPlaylist);
             setTracks(fetchedTracks.items);
         }
         execute()

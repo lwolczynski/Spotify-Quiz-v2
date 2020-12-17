@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 
-const Tile = ({ img, name, tracks }) => {
+const Tile = ({ img, name, tracks, isRegularPlaylist }) => {
 
     const [redirect, setRedirect] = useState(false)
 
@@ -10,7 +10,7 @@ const Tile = ({ img, name, tracks }) => {
     }
 
     return (
-        redirect ? <Redirect to={{ pathname: "/play", state: { playlistUrl: tracks, playlistName: name } }} /> :
+        redirect ? <Redirect to={{ pathname: "/play", state: { playlistUrl: tracks, playlistName: name, isRegularPlaylist } }} /> :
         <li className="album-tile">
             <button onClick={play} className="album-tile-button button-transparent">
                 <img src={img} alt={name} className="album-img" />

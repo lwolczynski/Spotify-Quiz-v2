@@ -2,32 +2,32 @@ import axios from 'axios'
 import { filterItemsByKeys, reduceToOneKey } from '../utils/utils.js';
 import { refreshTokens } from './auth.js';
 
-const getItems = (url) => {
+const getItems = async (url, initial, addMarket = false) => {
+  const limit = initial ? 50 : null
+  const market = initial ? (addMarket ? localStorage.getItem('market') : null) : null
   return axios({
     url,
     method: 'get',
     params: {
-      limit: 50
+      limit,
+      market
     },
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
     }
-  })
-}
-
-const getAllPlaylists = async (url, all = []) => {
-//  await checkTokenValidity();
-  let newData;
-  await getItems(url)
-    .then((res) => {
-      newData = res.data;
+    }).then((res) => {
+      return res.data;
     })
     .catch(async (err) => {
       console.log(err)
       await refreshTokens()
-      return getAllPlaylists(url, all)
+      return getItems(url)
     });
+}
+
+const getAllPlaylists = async (url, all = []) => {
+  let newData = await getItems(url, all.length ? false : true)
   if (!newData) return
   const items = newData.items ? newData.items : newData.playlists.items;
   // Pick only relevant keys from items
@@ -36,20 +36,11 @@ const getAllPlaylists = async (url, all = []) => {
   return (newData.next) ? await getAllPlaylists(newData.next, all) : {"items": all};
 }
 
-const getAllTracks = async (url, all = []) => {
-//  await checkTokenValidity();
-  let newData;
-  await getItems(url)
-    .then((res) => {
-      newData = res.data;
-    })
-    .catch(async (err) => {
-      console.log(err)
-      await refreshTokens()
-      return getAllPlaylists(url, all)
-    });
+const getAllTracks = async (url, isRegularPlaylist, all = []) => {
+  console.log(isRegularPlaylist)
+  let newData = await getItems(url, all.length ? false : true, isRegularPlaylist)
   all = all.concat(reduceToOneKey(newData.items, "track"));
-  return (newData.next) ? await getAllTracks(newData.next, all) : {"items": all};
+  return (newData.next) ? await getAllTracks(newData.next, isRegularPlaylist, all) : {"items": all};
 }
 
 export { getAllPlaylists, getAllTracks };
