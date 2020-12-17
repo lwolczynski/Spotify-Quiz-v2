@@ -37,9 +37,12 @@ const getAllPlaylists = async (url, all = []) => {
 }
 
 const getAllTracks = async (url, isRegularPlaylist, all = []) => {
-  console.log(isRegularPlaylist)
   let newData = await getItems(url, all.length ? false : true, isRegularPlaylist)
-  all = all.concat(reduceToOneKey(newData.items, "track"));
+  // const tracks = reduceToOneKey(newData.items, "track")
+  const tracks = isRegularPlaylist ? newData.items.map(e => e.track) : newData.items;
+  console.log(tracks)
+  // Pick only tracks with preview
+  all = all.concat(tracks.filter(e => e.preview_url));
   return (newData.next) ? await getAllTracks(newData.next, isRegularPlaylist, all) : {"items": all};
 }
 
