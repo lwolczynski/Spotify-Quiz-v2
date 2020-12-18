@@ -46,7 +46,7 @@ const ListPart = ({ name, num, storage, url }) => {
                 img = "/img/covers/no_cover.png";
             }
             return (
-                <Tile img={img} name={item.name} tracks={item.tracks.href} key={item.id} isRegularPlaylist={true} />
+                <Tile img={img} name={item.name} tracks={item.tracks.href} key={item.id} playlistType="regular" />
             )
         })
     }

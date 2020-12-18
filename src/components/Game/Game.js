@@ -15,7 +15,7 @@ const Game = () => {
 
     useEffect(() => {
         const execute = async () => {
-            const fetchedTracks = await getAllTracks(location.state.playlistUrl, location.state.isRegularPlaylist);
+            const fetchedTracks = await getAllTracks(location.state.playlistUrl, location.state.playlistType);
             setTracks(fetchedTracks.items);
         }
         execute()

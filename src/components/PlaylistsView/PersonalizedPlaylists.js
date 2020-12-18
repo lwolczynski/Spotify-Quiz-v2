@@ -12,7 +12,8 @@ const personalized_playlists =
         "name":"Your Top Tracks (last 4 weeks)",
         "tracks":{
           "href":"https://api.spotify.com/v1/me/top/tracks?time_range=short_term"
-        }
+        },
+        "playlistType": "top"
       },
       {
         "images":[
@@ -24,7 +25,8 @@ const personalized_playlists =
         "name":"Your Top Tracks (last 6 months)",
         "tracks":{
           "href":"https://api.spotify.com/v1/me/top/tracks?time_range=medium_term"
-        }
+        },
+        "playlistType": "top"
       },
       {
         "images":[
@@ -36,7 +38,8 @@ const personalized_playlists =
         "name":"Your Top Tracks Ever",
         "tracks":{
           "href":"https://api.spotify.com/v1/me/top/tracks?time_range=long_term"
-        }
+        },
+        "playlistType": "top"
       },
       {
         "images":[
@@ -48,7 +51,8 @@ const personalized_playlists =
         "name":"Recently Played",
         "tracks":{
           "href":"https://api.spotify.com/v1/me/player/recently-played"
-        }
+        },
+        "playlistType": "recent"
       }
     ]
 }
