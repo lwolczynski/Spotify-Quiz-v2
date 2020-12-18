@@ -20,8 +20,8 @@ const Login = ({ setAuthorized }) => {
             } catch (err) {
                 // do nothing
             }
-            setAuthorized(true);
             setSigningIn(false);
+            setAuthorized(true);
         };
         execute();
     }, []);
