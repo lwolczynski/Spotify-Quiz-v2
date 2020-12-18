@@ -5,6 +5,7 @@ const Track = ({ track }) => {
     useEffect(() => {
         console.log(track)
         const audio = new Audio(track.preview_url);
+        audio.loop = true;
         audio.play();
         
         return () => {
