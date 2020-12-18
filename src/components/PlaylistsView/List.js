@@ -5,10 +5,6 @@ import { Accordion } from 'react-bootstrap'
 
 const List = () => {
 
-    useEffect(() => {
-        window.history.replaceState({}, document.title, '/');
-    }, []);
-
     return (
         <div className="container main">
             <h1>Pick a Playlist</h1>

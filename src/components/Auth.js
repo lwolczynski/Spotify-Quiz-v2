@@ -1,5 +1,4 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
 import { loginUrl, logout } from '../api/auth';
 import Button from 'react-bootstrap/Button'
 
@@ -11,10 +10,8 @@ const Auth = ({ authorized, setAuthorized }) => {
         } else if (authorized) {
             return (
                 <Button variant="link" onClick={() => {
-                    window.history.replaceState({}, document.title, '/');
                     logout();
                     setAuthorized(false);
-                    <Redirect to='/' />
                 }}>Logout</Button>
             )
         } else {

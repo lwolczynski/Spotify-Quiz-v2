@@ -1,13 +1,17 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom'
 
 const Header = ({ children }) => {
+
+    const [clicked, setClicked] = useState(false)
+
     return (
+        // clicked ? <Redirect to="/" /> :
         <nav className="navbar navbar-light">
-            <Link to="/" className="navbar-brand">
+            <div onClick={() => setClicked(true)} className="navbar-brand">
                 <img src="/favicon.ico" width="30" height="30" className="d-inline-block align-top margin-right-short" alt="" />
                 SpotiQuiz
-            </Link>
+            </div>
             { children }
         </nav>
     )

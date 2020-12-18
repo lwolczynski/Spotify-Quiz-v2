@@ -1,10 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 const Main = () => {
-
-    useEffect(() => {
-        window.history.replaceState({}, document.title, '/');
-    }, []);
 
     return (
         <div className="row flex-fill justify-content-center align-items-center">
