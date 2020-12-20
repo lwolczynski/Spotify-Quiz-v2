@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter, MemoryRouter, Route, Redirect, Switch } from 'react-router-dom'
+import { MemoryRouter, Route, Redirect, Switch } from 'react-router-dom'
 import Header from './Header'
 import Auth from './Auth'
 import Main from './Main'
@@ -11,26 +11,31 @@ import { checkAuth } from '../api/auth';
 
 const App = () => {
     const [authorized, setAuthorized] = useState(checkAuth())
+    let callback = false
+
+    if (window.location.pathname === "/callback/") {
+        callback = true
+    }
 
     return (
         <>
-            <BrowserRouter>
+            <MemoryRouter>
                 <Header>
                     <Auth authorized={authorized} setAuthorized={setAuthorized} />
                 </Header>
-                <Switch>
-                    <Route path="/callback" component={() => <Login setAuthorized={setAuthorized} />} />
-                    <MemoryRouter>
+                {
+                    callback ? <Login setAuthorized={setAuthorized} /> :
+                    <Switch>
                         <Route path="/" exact>
                             {authorized ? <List /> : <Main />}
                         </Route>
                         <Route path="/play" exact>
                             {authorized ? <Game /> : <Redirect to="/" />}
                         </Route>
-                    </MemoryRouter>
-                </Switch>
+                    </Switch>
+                }
                 <Footer />
-            </BrowserRouter>
+            </MemoryRouter>
         </>
     )
 }

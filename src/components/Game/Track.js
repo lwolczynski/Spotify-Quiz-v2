@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 const Track = ({ track }) => {
 
@@ -14,6 +14,7 @@ const Track = ({ track }) => {
     }, [track])
 
     return (
+        
         <div>
            <img src={track.album.images[0].url} />
         </div>

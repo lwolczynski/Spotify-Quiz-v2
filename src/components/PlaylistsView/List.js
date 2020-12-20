@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import ActivityPart from './ActivityPart'
 import ListPart from './ListPart'
 import { Accordion } from 'react-bootstrap'
