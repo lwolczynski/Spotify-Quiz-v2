@@ -10,6 +10,7 @@ const Game = () => {
     const [trackNumber, setTrackNumber] = useState(0)
     const [score, setScore] = useState(0)
     const [started, setStarted] = useState(false)
+    const [search, setSearch ] = useState('')
 
     const location = useLocation();
 
@@ -22,11 +23,10 @@ const Game = () => {
     }, [])
 
     const renderTracks = () => {
-        return tracks.map((item) => {
-            return (
-                <Button variant="outline-dark" onClick={() => setTrackNumber(trackNumber+1)}>{item.name} by {item.artists[0].name}</Button>
-            )
-        })
+        const searchRegex = new RegExp(search, "i");
+        return tracks.reduce((result, item) => {
+            return (searchRegex.test(item.name) || searchRegex.test(item.artists[0].name)) ? [...result, <Button variant="outline-dark" onClick={() => setTrackNumber(trackNumber+1)}>{item.name} by {item.artists[0].name}</Button>] : result
+        }, [])
     }
 
     return (
@@ -43,7 +43,7 @@ const Game = () => {
             </div>
             <div className="row">
                 <div className="col">
-                    <input />
+                    <input onChange={(e) => setSearch(e.target.value)}/>
                     {renderTracks()}
                 </div>
             </div>
