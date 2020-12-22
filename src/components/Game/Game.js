@@ -12,7 +12,7 @@ const Game = () => {
     const [tracks, setTracks] = useState(null)
     const [currentTrackNo, setCurrentTrackNo] = useState(0)
     const [started, setStarted] = useState(false)
-    const [score, setScore] = useState({'correct': 0, 'wrong': 0, 'left': null})
+    const [score, setScore] = useState({'correct': 0, 'wrong': 0})
 
     const location = useLocation();
 
@@ -20,10 +20,6 @@ const Game = () => {
         const execute = async () => {
             const fetchedTracks = await getAllTracks(location.state.playlistUrl, location.state.playlistType);
             setTracks(fetchedTracks.items);
-            setScore(prevState => ({
-                ...prevState,
-                'left': fetchedTracks.items.length
-            }))
         }
         execute()
     }, [])
@@ -34,15 +30,13 @@ const Game = () => {
         if (tracks[currentTrackNo].id === item.id) {
             setScore(prevState => ({
                 ...prevState,
-                'correct': score['correct']+1,
-                'left': score['left']-1
+                'correct': score['correct']+1
             }))
             tracks[currentTrackNo].guessed = true
         } else {
             setScore(prevState => ({
                 ...prevState,
-                'wrong': score['wrong']+1,
-                'left': score['left']-1
+                'wrong': score['wrong']+1
             }))
             tracks[currentTrackNo].guessed = false
         }
