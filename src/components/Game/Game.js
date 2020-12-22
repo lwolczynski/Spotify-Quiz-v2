@@ -2,17 +2,17 @@ import React, { useState , useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Loader from '../Loader'
 import Track from './Track'
+import TrackList from './TrackList'
 import { getAllTracks } from '../../api/api.js'
 import Button from 'react-bootstrap/Button'
-import InputGroup from 'react-bootstrap/InputGroup'
-import FormControl from 'react-bootstrap/FormControl'
+
+import Image from 'react-bootstrap/Image'
 
 const Game = () => {
     const [tracks, setTracks] = useState(null)
-    const [trackNumber, setTrackNumber] = useState(0)
-    const [score, setScore] = useState({'correct': 0, 'wrong': 0, 'left': null})
+    const [currentTrackNo, setCurrentTrackNo] = useState(0)
     const [started, setStarted] = useState(false)
-    const [search, setSearch] = useState('')
+    const [score, setScore] = useState({'correct': 0, 'wrong': 0, 'left': null})
 
     const location = useLocation();
 
@@ -22,54 +22,31 @@ const Game = () => {
             setTracks(fetchedTracks.items);
             setScore(prevState => ({
                 ...prevState,
-                ['left']: fetchedTracks.items.length
+                'left': fetchedTracks.items.length
             }))
         }
         execute()
     }, [])
 
-    const answer = ({ item }) => {
-        tracks[trackNumber].answered = true
-        if (tracks[trackNumber].id === item.id) {
+
+    const answer = (item) => {
+        tracks[currentTrackNo].answered = true
+        if (tracks[currentTrackNo].id === item.id) {
             setScore(prevState => ({
                 ...prevState,
-                ['correct']: score['correct']+1,
-                ['left']: score['left']-1
+                'correct': score['correct']+1,
+                'left': score['left']-1
             }))
-            tracks[trackNumber].guessed = true
+            tracks[currentTrackNo].guessed = true
         } else {
             setScore(prevState => ({
                 ...prevState,
-                ['wrong']: score['wrong']+1,
-                ['left']: score['left']-1
+                'wrong': score['wrong']+1,
+                'left': score['left']-1
             }))
-            tracks[trackNumber].guessed = false
+            tracks[currentTrackNo].guessed = false
         }
-        setSearch('')
-        setTrackNumber(trackNumber+1)
-    }
-    
-    const renderTracks = () => {
-        const searchRegex = new RegExp(search, "i");
-        return tracks.reduce((result, item) => {
-            return (searchRegex.test(item.name) || searchRegex.test(item.artists[0].name)) ? [...result, <Button className="mx-1 my-1" variant={item.answered ? (item.guessed ? "success" : "danger") : "outline-secondary"} disabled={item.answered || !started ? true : false} onClick={() => answer({item})}>{item.name} by {item.artists[0].name}</Button>] : result
-        }, [])
-    }
-
-    const renderInput = () => {
-        return (
-            <InputGroup className="mb-1">
-            <InputGroup.Prepend>
-              <InputGroup.Text id="basic-addon1">Search</InputGroup.Text>
-            </InputGroup.Prepend>
-            <FormControl
-              aria-label="Search"
-              aria-describedby="basic-addon1"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </InputGroup>
-        )
+        setCurrentTrackNo(currentTrackNo+1)
     }
 
     return (
@@ -78,18 +55,18 @@ const Game = () => {
             <h1>{location.state.playlistName}</h1>
             <div className="row mb-2">
                 <div className="col-md-6">
-                    {started ? <Track track={tracks[trackNumber]} /> : <Button onClick={() => setStarted(true)}>Start</Button>}
+                    {started ? <Track track={tracks[currentTrackNo]} /> : <Image className="game-album" src="/img/covers/no_cover.png" />}
                 </div>
                 <div className="col-md-6">
                     <h3>Your score: {score.correct}/{tracks.length}</h3>
+                    <Button onClick={() => setStarted(true)}>Start</Button>
+                    <Button>Pause</Button>
+                    <Button>Restart</Button>
                 </div>
             </div>
             <div className="row">
                 <div className="col">
-                    {renderInput()}
-                    <div className="mx-n1" style={{textAlign: 'center'}}>
-                        {renderTracks()}
-                    </div>
+                    <TrackList tracks={tracks} started={started} sendAnswer={answer} />
                 </div>
             </div>
         </div>
