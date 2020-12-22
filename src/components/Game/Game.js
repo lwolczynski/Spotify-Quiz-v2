@@ -4,6 +4,8 @@ import Loader from '../Loader'
 import Track from './Track'
 import { getAllTracks } from '../../api/api.js'
 import Button from 'react-bootstrap/Button'
+import InputGroup from 'react-bootstrap/InputGroup'
+import FormControl from 'react-bootstrap/FormControl'
 
 const Game = () => {
     const [tracks, setTracks] = useState(null)
@@ -50,26 +52,44 @@ const Game = () => {
     const renderTracks = () => {
         const searchRegex = new RegExp(search, "i");
         return tracks.reduce((result, item) => {
-            return (searchRegex.test(item.name) || searchRegex.test(item.artists[0].name)) ? [...result, <Button variant={item.answered ? (item.guessed ? "success" : "danger") : "outline-dark"} disabled={item.answered || !started ? true : false} onClick={() => answer({item})}>{item.name} by {item.artists[0].name}</Button>] : result
+            return (searchRegex.test(item.name) || searchRegex.test(item.artists[0].name)) ? [...result, <Button className="mx-1 my-1" variant={item.answered ? (item.guessed ? "success" : "danger") : "outline-secondary"} disabled={item.answered || !started ? true : false} onClick={() => answer({item})}>{item.name} by {item.artists[0].name}</Button>] : result
         }, [])
+    }
+
+    const renderInput = () => {
+        return (
+            <InputGroup className="mb-1">
+            <InputGroup.Prepend>
+              <InputGroup.Text id="basic-addon1">Search</InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+              aria-label="Search"
+              aria-describedby="basic-addon1"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </InputGroup>
+        )
     }
 
     return (
         tracks === null ? <Loader /> :        
         <div className="container main">
             <h1>{location.state.playlistName}</h1>
-            <div className="row">
-                <div className="col-6">
+            <div className="row mb-2">
+                <div className="col-md-6">
                     {started ? <Track track={tracks[trackNumber]} /> : <Button onClick={() => setStarted(true)}>Start</Button>}
                 </div>
-                <div className="col-6">
+                <div className="col-md-6">
                     <h3>Your score: {score.correct}/{tracks.length}</h3>
                 </div>
             </div>
             <div className="row">
                 <div className="col">
-                    <input onChange={(e) => setSearch(e.target.value)}/>
-                    {renderTracks()}
+                    {renderInput()}
+                    <div className="mx-n1" style={{textAlign: 'center'}}>
+                        {renderTracks()}
+                    </div>
                 </div>
             </div>
         </div>

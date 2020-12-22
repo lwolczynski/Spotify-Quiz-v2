@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import Image from 'react-bootstrap/Image'
 
 const Track = ({ track }) => {
 
@@ -15,7 +16,7 @@ const Track = ({ track }) => {
     return (
         
         <div>
-           <img src={track.album.images[0].url} />
+            <Image className="game-album" src={track.album.images[0].url} />
         </div>
     )
 }

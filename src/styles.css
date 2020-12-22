@@ -82,3 +82,17 @@ footer {
 .margin-right-short {
     margin-right: 5px;
 }
+
+.game-album {
+    width: 100%;
+}
+
+.game-album-animate {
+    animation-name: reveal;
+    animation-duration: 15s;
+}
+
+@keyframes reveal {
+    from {filter: opacity(0.1);}
+    to {filter: opacity(1);}
+}
