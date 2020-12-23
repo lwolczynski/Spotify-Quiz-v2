@@ -16,6 +16,7 @@ const Game = () => {
     const [tracksOrder, setTracksOrder] = useState(null)
     const [started, setStarted] = useState(false)
     const [paused, setPaused] = useState(true)
+    const [finished, setFinished] = useState(false)
     const [score, setScore] = useState({'correct': 0, 'wrong': 0})
 
     const location = useLocation();
@@ -42,12 +43,19 @@ const Game = () => {
 
     const startGame = () => {
         setStarted(true)
-        setPaused(false)
         startTimer()
+        setPaused(false)
+    }
+
+    const finishGame = () => {
+        setStarted(false)
+        setPaused(true)
+        setFinished(true)
     }
 
     const restartGame = () => {
         setStarted(false)
+        setFinished(false)
         resetTimer()
         setScore({'correct': 0, 'wrong': 0})
         randomizeOrder()
@@ -72,7 +80,7 @@ const Game = () => {
             }))
             tracks[tracksOrder[currentTrackNo]].guessed = false
         }
-        setCurrentTrackNo(currentTrackNo+1)
+        currentTrackNo === tracks.length-1 ? finishGame() : setCurrentTrackNo(currentTrackNo+1)
     }
 
     return (
@@ -86,9 +94,9 @@ const Game = () => {
                 <div className="col-md-6">
                     <h3>Your score: {score.correct}/{tracks.length}</h3>
                     <h3>{printTimer()}</h3>
-                    {!started && <Button onClick={startGame}>Start</Button>}
+                    {!started && !finished && <Button onClick={startGame}>Start</Button>}
                     {started && <Button onClick={() => setPaused(!paused)}>{paused ? 'Resume' : 'Pause'}</Button>}
-                    {started && <Button onClick={restartGame}>Restart</Button>}
+                    {(finished || started) && <Button onClick={restartGame}>Restart</Button>}
                 </div>
             </div>
             <div className="row">
