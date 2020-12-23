@@ -48,6 +48,7 @@ const Game = () => {
                 randomizeOrder()
                 resetTimer()
                 setCurrentTrackNo(0)
+                break
             case 'started':
                 startTimer()
                 break
