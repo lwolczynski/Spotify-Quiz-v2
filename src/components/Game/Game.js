@@ -1,5 +1,6 @@
 import React, { useState , useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import useTimer from '../hooks/useTimer';
 import Loader from '../Loader'
 import Track from './Track'
 import TrackList from './TrackList'
@@ -17,6 +18,7 @@ const Game = () => {
     const [score, setScore] = useState({'correct': 0, 'wrong': 0})
 
     const location = useLocation();
+    const { startTimer, pauseTimer, resetTimer, printTimer } = useTimer()
 
     useEffect(() => {
         const execute = async () => {
@@ -33,8 +35,14 @@ const Game = () => {
         setTracksOrder(order)
     }
 
+    const startGame = () => {
+        setStarted(true)
+        startTimer()
+    }
+
     const restartGame = () => {
         setStarted(false)
+        resetTimer()
         setScore({'correct': 0, 'wrong': 0})
         randomizeOrder()
         tracks.map(track => {
@@ -71,9 +79,10 @@ const Game = () => {
                 </div>
                 <div className="col-md-6">
                     <h3>Your score: {score.correct}/{tracks.length}</h3>
-                    <Button onClick={() => setStarted(true)}>Start</Button>
-                    <Button>Pause</Button>
-                    <Button onClick={() => restartGame()}>Restart</Button>
+                    <h3>{printTimer()}</h3>
+                    <Button onClick={startGame}>Start</Button>
+                    <Button onClick={pauseTimer}>Pause</Button>
+                    <Button onClick={restartGame}>Restart</Button>
                 </div>
             </div>
             <div className="row">
