@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
-import useTimer from '../hooks/useTimer';
+import useTimer from '../hooks/useTimer'
+import useScore from '../hooks/useScore'
 import Loader from '../Loader'
 import Controls from './Controls'
 import Track from './Track'
@@ -15,17 +16,18 @@ const Game = () => {
     const [currentTrackNo, setCurrentTrackNo] = useState(0)
     const [tracksOrder, setTracksOrder] = useState(null)
     const [gameState, setGameState] = useState('init') // 'init', 'started', 'paused', 'finished'
-    const [score, setScore] = useState({'correct': 0, 'wrong': 0})
 
-    const isFirstRun = useRef(true);
+    const isFirstRun = useRef(true)
 
-    const location = useLocation();
+    const location = useLocation()
+
     const { startTimer, pauseTimer, resetTimer, printTimer } = useTimer()
+    const { score, scoreAddPoint, scoreAddMistake, resetScore } = useScore()
 
     useEffect(() => {
         const execute = async () => {
-            const fetchedTracks = await getAllTracks(location.state.playlistUrl, location.state.playlistType);
-            setTracks(fetchedTracks.items);
+            const fetchedTracks = await getAllTracks(location.state.playlistUrl, location.state.playlistType)
+            setTracks(fetchedTracks.items)
             randomizeOrder(fetchedTracks.items.length)
         }
         execute()
@@ -33,12 +35,12 @@ const Game = () => {
 
     useEffect(() => {
         if (isFirstRun.current) {
-            isFirstRun.current = false;
-            return;
+            isFirstRun.current = false
+            return
         }
         switch(gameState) {
             case 'init':
-                setScore({'correct': 0, 'wrong': 0})
+                resetScore()
                 tracks.map(track => {
                     track.answered = null
                     track.guessed = null
@@ -48,10 +50,10 @@ const Game = () => {
                 setCurrentTrackNo(0)
             case 'started':
                 startTimer()
-                break;
+                break
             case 'paused':
                 pauseTimer()
-                break;
+                break
             case 'finished':
                 pauseTimer()
         }
@@ -66,16 +68,10 @@ const Game = () => {
     const answer = (item) => {
         tracks[tracksOrder[currentTrackNo]].answered = true
         if (tracks[tracksOrder[currentTrackNo]].id === item.id) {
-            setScore(prevState => ({
-                ...prevState,
-                'correct': score['correct']+1
-            }))
+            scoreAddPoint()
             tracks[tracksOrder[currentTrackNo]].guessed = true
         } else {
-            setScore(prevState => ({
-                ...prevState,
-                'wrong': score['wrong']+1
-            }))
+            scoreAddMistake()
             tracks[tracksOrder[currentTrackNo]].guessed = false
         }
         currentTrackNo === tracks.length-1 ? setGameState('finished') : setCurrentTrackNo(currentTrackNo+1)
