@@ -14,9 +14,7 @@ const Game = () => {
     const [tracks, setTracks] = useState(null)
     const [currentTrackNo, setCurrentTrackNo] = useState(0)
     const [tracksOrder, setTracksOrder] = useState(null)
-    const [started, setStarted] = useState(false)
-    const [paused, setPaused] = useState(true)
-    const [finished, setFinished] = useState(false)
+    const [gameState, setGameState] = useState('init') // 'init', 'started', 'paused', 'finished', 'restarted'
     const [score, setScore] = useState({'correct': 0, 'wrong': 0})
 
     const location = useLocation();
@@ -32,37 +30,35 @@ const Game = () => {
     }, [])
 
     useEffect(() => {
-        paused ? pauseTimer() : startTimer()
-    }, [paused])
+        switch(gameState) {
+            case 'init':
+                break;
+            case 'started':
+                startTimer()
+                break;
+            case 'paused':
+                pauseTimer()
+                break;
+            case 'finished':
+                pauseTimer()
+                break;
+            case 'restarted':
+                setScore({'correct': 0, 'wrong': 0})
+                tracks.map(track => {
+                    track.answered = null
+                    track.guessed = null
+                })
+                randomizeOrder()
+                resetTimer()
+                setCurrentTrackNo(0)
+                setGameState('init')
+          }
+    }, [gameState])
 
     const randomizeOrder = (numOfTracks = tracks.length) => {
         const order = [...Array(numOfTracks).keys()]
         shuffleArray(order)
         setTracksOrder(order)
-    }
-
-    const startGame = () => {
-        setStarted(true)
-        startTimer()
-        setPaused(false)
-    }
-
-    const finishGame = () => {
-        setStarted(false)
-        setPaused(true)
-        setFinished(true)
-    }
-
-    const restartGame = () => {
-        setStarted(false)
-        setFinished(false)
-        resetTimer()
-        setScore({'correct': 0, 'wrong': 0})
-        randomizeOrder()
-        tracks.map(track => {
-            track.answered = null
-            track.guessed = null
-        })
     }
 
     const answer = (item) => {
@@ -80,7 +76,7 @@ const Game = () => {
             }))
             tracks[tracksOrder[currentTrackNo]].guessed = false
         }
-        currentTrackNo === tracks.length-1 ? finishGame() : setCurrentTrackNo(currentTrackNo+1)
+        currentTrackNo === tracks.length-1 ? setGameState('finished') : setCurrentTrackNo(currentTrackNo+1)
     }
 
     return (
@@ -89,19 +85,20 @@ const Game = () => {
             <h1>{location.state.playlistName}</h1>
             <div className="row mb-2">
                 <div className="col-md-6">
-                    {started ? <Track track={tracks[tracksOrder[currentTrackNo]]} paused={paused} /> : <Image className="game-album" src="/img/covers/no_cover.png" />}
+                    {(gameState !== 'init') ? <Track track={tracks[tracksOrder[currentTrackNo]]} paused={(gameState !== 'started')} /> : <Image className="game-album" src="/img/covers/no_cover.png" />}
                 </div>
                 <div className="col-md-6">
                     <h3>Your score: {score.correct}/{tracks.length}</h3>
                     <h3>{printTimer()}</h3>
-                    {!started && !finished && <Button onClick={startGame}>Start</Button>}
-                    {started && <Button onClick={() => setPaused(!paused)}>{paused ? 'Resume' : 'Pause'}</Button>}
-                    {(finished || started) && <Button onClick={restartGame}>Restart</Button>}
+                    {(gameState === 'init') && <Button onClick={() => {setGameState('started')}}>Start</Button>}
+                    {(gameState === 'started') && <Button onClick={() => {setGameState('paused')}}>Pause</Button>}
+                    {(gameState === 'paused') && <Button onClick={() => {setGameState('started')}}>Resume</Button>}
+                    {(gameState !== 'init') && <Button onClick={() => {setGameState('restarted')}}>Restart</Button>}
                 </div>
             </div>
             <div className="row">
                 <div className="col">
-                    <TrackList tracks={tracks} disabled={(started && !paused)} sendAnswer={answer} />
+                    <TrackList tracks={tracks} disabled={(gameState !== 'started')} sendAnswer={answer} />
                 </div>
             </div>
         </div>
