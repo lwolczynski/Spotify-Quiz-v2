@@ -1,12 +1,12 @@
-import React, { useState , useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import useTimer from '../hooks/useTimer';
 import Loader from '../Loader'
+import Controls from './Controls'
 import Track from './Track'
 import TrackList from './TrackList'
 import { getAllTracks } from '../../api/api.js'
 import { shuffleArray } from '../../utils/utils.js'
-import Button from 'react-bootstrap/Button'
 
 import Image from 'react-bootstrap/Image'
 
@@ -92,10 +92,7 @@ const Game = () => {
                 <div className="col-md-6">
                     <h3>Your score: {score.correct}/{tracks.length}</h3>
                     <h3>{printTimer()}</h3>
-                    {(gameState === 'init') && <Button onClick={() => {setGameState('started')}}>Start</Button>}
-                    {(gameState === 'started') && <Button onClick={() => {setGameState('paused')}}>Pause</Button>}
-                    {(gameState === 'paused') && <Button onClick={() => {setGameState('started')}}>Resume</Button>}
-                    {(gameState !== 'init') && <Button onClick={() => {setGameState('init')}}>Restart</Button>}
+                    <Controls gameState={gameState} setGameState={setGameState} />
                 </div>
             </div>
             <div className="row">
