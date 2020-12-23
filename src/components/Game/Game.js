@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react'
+import React, { useState , useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import useTimer from '../hooks/useTimer';
 import Loader from '../Loader'
@@ -14,8 +14,10 @@ const Game = () => {
     const [tracks, setTracks] = useState(null)
     const [currentTrackNo, setCurrentTrackNo] = useState(0)
     const [tracksOrder, setTracksOrder] = useState(null)
-    const [gameState, setGameState] = useState('init') // 'init', 'started', 'paused', 'finished', 'restarted'
+    const [gameState, setGameState] = useState('init') // 'init', 'started', 'paused', 'finished'
     const [score, setScore] = useState({'correct': 0, 'wrong': 0})
+
+    const isFirstRun = useRef(true);
 
     const location = useLocation();
     const { startTimer, pauseTimer, resetTimer, printTimer } = useTimer()
@@ -30,19 +32,12 @@ const Game = () => {
     }, [])
 
     useEffect(() => {
+        if (isFirstRun.current) {
+            isFirstRun.current = false;
+            return;
+        }
         switch(gameState) {
             case 'init':
-                break;
-            case 'started':
-                startTimer()
-                break;
-            case 'paused':
-                pauseTimer()
-                break;
-            case 'finished':
-                pauseTimer()
-                break;
-            case 'restarted':
                 setScore({'correct': 0, 'wrong': 0})
                 tracks.map(track => {
                     track.answered = null
@@ -51,8 +46,15 @@ const Game = () => {
                 randomizeOrder()
                 resetTimer()
                 setCurrentTrackNo(0)
-                setGameState('init')
-          }
+            case 'started':
+                startTimer()
+                break;
+            case 'paused':
+                pauseTimer()
+                break;
+            case 'finished':
+                pauseTimer()
+        }
     }, [gameState])
 
     const randomizeOrder = (numOfTracks = tracks.length) => {
@@ -93,7 +95,7 @@ const Game = () => {
                     {(gameState === 'init') && <Button onClick={() => {setGameState('started')}}>Start</Button>}
                     {(gameState === 'started') && <Button onClick={() => {setGameState('paused')}}>Pause</Button>}
                     {(gameState === 'paused') && <Button onClick={() => {setGameState('started')}}>Resume</Button>}
-                    {(gameState !== 'init') && <Button onClick={() => {setGameState('restarted')}}>Restart</Button>}
+                    {(gameState !== 'init') && <Button onClick={() => {setGameState('init')}}>Restart</Button>}
                 </div>
             </div>
             <div className="row">
