@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'react-bootstrap/Image'
 
-const Track = ({ track }) => {
+const Track = ({ track, paused }) => {
+    const [audio, setAudio] = useState(null)
 
     useEffect(() => {
-        const audio = new Audio(track.preview_url);
+        const audio = new Audio(track.preview_url)
+        setAudio(audio)
         audio.loop = true;
         audio.play();
         
@@ -13,8 +15,13 @@ const Track = ({ track }) => {
         }
     }, [track])
 
+    useEffect(() => {
+        if (audio) {
+            paused ? audio.pause() : audio.play()
+        }
+    }, [paused]) 
+
     return (
-        
         <div>
             <Image className="game-album" src={track.album.images[0].url} />
         </div>

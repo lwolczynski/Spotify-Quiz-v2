@@ -3,7 +3,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 
-const TrackList = ({ tracks, started, sendAnswer }) => {
+const TrackList = ({ tracks, disabled, sendAnswer }) => {
 
     const [search, setSearch] = useState('')
 
@@ -15,7 +15,7 @@ const TrackList = ({ tracks, started, sendAnswer }) => {
     const renderTracks = () => {
         const searchRegex = new RegExp(search, "i");
         return tracks.reduce((result, item) => {
-            return (searchRegex.test(item.name) || searchRegex.test(item.artists[0].name)) ? [...result, <Button className="mx-1 my-1" variant={item.answered ? (item.guessed ? "success" : "danger") : "outline-secondary"} disabled={item.answered || !started ? true : false} onClick={() => answer({item})}>{item.name} by {item.artists[0].name}</Button>] : result
+            return (searchRegex.test(item.name) || searchRegex.test(item.artists[0].name)) ? [...result, <Button className="mx-1 my-1" variant={item.answered ? (item.guessed ? "success" : "danger") : "outline-secondary"} disabled={item.answered || !disabled ? true : false} onClick={() => answer({item})}>{item.name} by {item.artists[0].name}</Button>] : result
         }, [])
     }
 

@@ -15,6 +15,7 @@ const Game = () => {
     const [currentTrackNo, setCurrentTrackNo] = useState(0)
     const [tracksOrder, setTracksOrder] = useState(null)
     const [started, setStarted] = useState(false)
+    const [paused, setPaused] = useState(true)
     const [score, setScore] = useState({'correct': 0, 'wrong': 0})
 
     const location = useLocation();
@@ -29,6 +30,10 @@ const Game = () => {
         execute()
     }, [])
 
+    useEffect(() => {
+        paused ? pauseTimer() : startTimer()
+    }, [paused])
+
     const randomizeOrder = (numOfTracks = tracks.length) => {
         const order = [...Array(numOfTracks).keys()]
         shuffleArray(order)
@@ -37,6 +42,7 @@ const Game = () => {
 
     const startGame = () => {
         setStarted(true)
+        setPaused(false)
         startTimer()
     }
 
@@ -75,19 +81,19 @@ const Game = () => {
             <h1>{location.state.playlistName}</h1>
             <div className="row mb-2">
                 <div className="col-md-6">
-                    {started ? <Track track={tracks[tracksOrder[currentTrackNo]]} /> : <Image className="game-album" src="/img/covers/no_cover.png" />}
+                    {started ? <Track track={tracks[tracksOrder[currentTrackNo]]} paused={paused} /> : <Image className="game-album" src="/img/covers/no_cover.png" />}
                 </div>
                 <div className="col-md-6">
                     <h3>Your score: {score.correct}/{tracks.length}</h3>
                     <h3>{printTimer()}</h3>
-                    <Button onClick={startGame}>Start</Button>
-                    <Button onClick={pauseTimer}>Pause</Button>
-                    <Button onClick={restartGame}>Restart</Button>
+                    {!started && <Button onClick={startGame}>Start</Button>}
+                    {started && <Button onClick={() => setPaused(!paused)}>{paused ? 'Resume' : 'Pause'}</Button>}
+                    {started && <Button onClick={restartGame}>Restart</Button>}
                 </div>
             </div>
             <div className="row">
                 <div className="col">
-                    <TrackList tracks={tracks} started={started} sendAnswer={answer} />
+                    <TrackList tracks={tracks} disabled={(started && !paused)} sendAnswer={answer} />
                 </div>
             </div>
         </div>
