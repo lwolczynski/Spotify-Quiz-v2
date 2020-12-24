@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 const useScore = () => {
     const [score, setScore] = useState({'correct': 0, 'wrong': 0})
