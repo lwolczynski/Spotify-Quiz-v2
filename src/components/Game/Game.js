@@ -32,7 +32,7 @@ const Game = () => {
             randomizeOrder(fetchedTracks.items.length)
         }
         execute()
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (isFirstRun.current) {
@@ -59,7 +59,7 @@ const Game = () => {
             case 'finished':
                 pauseTimer()
         }
-    }, [gameState])
+    }, [gameState]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const randomizeOrder = (numOfTracks = tracks.length) => {
         const order = [...Array(numOfTracks).keys()]

@@ -9,23 +9,23 @@ import { getAllPlaylists } from '../../api/api.js'
 const ListPart = ({ name, num, storage, url }) => {
     const [playlists, setPlaylists] = useState(() => {
         try {
-            const savedData = window.localStorage.getItem(storage);
-            return JSON.parse(savedData).items;
+            const savedData = window.localStorage.getItem(storage)
+            return JSON.parse(savedData).items
         } catch (err) {
             return []
         }
     })
-    const accordionValue = useContext(AccordionContext);
+    const accordionValue = useContext(AccordionContext)
 
     useEffect(() => {
-        if (localStorage.getItem(storage) === null) fetchPlaylists();
-    }, [])
+        if (localStorage.getItem(storage) === null) fetchPlaylists()
+    }, [])  // eslint-disable-line react-hooks/exhaustive-deps
 
     const fetchPlaylists = async () => {
-        const fetchedPlaylists = await getAllPlaylists(url);
+        const fetchedPlaylists = await getAllPlaylists(url)
         if (fetchedPlaylists) {
-            window.localStorage.setItem(storage, JSON.stringify(fetchedPlaylists));
-            setPlaylists(fetchedPlaylists.items);
+            window.localStorage.setItem(storage, JSON.stringify(fetchedPlaylists))
+            setPlaylists(fetchedPlaylists.items)
         }
     }
 
@@ -39,11 +39,11 @@ const ListPart = ({ name, num, storage, url }) => {
     const renderTiles = () => {
 
         return playlists.map((item, index) => {
-            let img;
+            let img
             try {
-                img = item.images[0].url;
+                img = item.images[0].url
             } catch (err) {
-                img = "/img/covers/no_cover.png";
+                img = "/img/covers/no_cover.png"
             }
             return (
                 <Tile img={img} name={item.name} tracks={item.tracks.href} key={item.id} playlistType="regular" />

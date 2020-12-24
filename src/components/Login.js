@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import Loader from './Loader'
-import { login } from '../api/auth';
-import { getProfile } from '../api/api';
+import { login } from '../api/auth'
+import { getProfile } from '../api/api'
 
-const params = (new URL(document.location)).searchParams;
-const code = params.get('code');
+const params = (new URL(document.location)).searchParams
+const code = params.get('code')
 
 const Login = ({ setAuthorized }) => {
     const [signingIn, setSigningIn] = useState(true)
 
     useEffect(() => {
-        window.history.replaceState({}, document.title, '/');
+        window.history.replaceState({}, document.title, '/')
         const execute = async () => {
             try {
-                await login(code);
-                const profile = await getProfile();
+                await login(code)
+                const profile = await getProfile()
                 window.localStorage.setItem('market', profile.country)
             } catch (err) {
                 // do nothing
             }
-            setSigningIn(false);
-            setAuthorized(true);
+            setSigningIn(false)
+            setAuthorized(true)
         };
         execute();
-    }, []);
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         signingIn ? <Loader /> : <Redirect to='/' />

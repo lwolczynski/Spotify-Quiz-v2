@@ -1,17 +1,17 @@
 import React from 'react'
-import { loginUrl, logout } from '../api/auth';
+import { loginUrl, logout } from '../api/auth'
 import Button from 'react-bootstrap/Button'
 
 const Auth = ({ authorized, setAuthorized }) => {
 
     const renderAuthButton = () => {
         if (authorized === null) {
-            return null;
+            return null
         } else if (authorized) {
             return (
                 <Button variant="link" onClick={() => {
-                    logout();
-                    setAuthorized(false);
+                    logout()
+                    setAuthorized(false)
                 }}>Logout</Button>
             )
         } else {

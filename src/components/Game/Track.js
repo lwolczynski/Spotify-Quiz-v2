@@ -7,8 +7,8 @@ const Track = ({ track, paused }) => {
     useEffect(() => {
         const audio = new Audio(track.preview_url)
         setAudio(audio)
-        audio.loop = true;
-        audio.play();
+        audio.loop = true
+        audio.play()
         
         return () => {
             audio.pause()
@@ -19,7 +19,7 @@ const Track = ({ track, paused }) => {
         if (audio) {
             paused ? audio.pause() : audio.play()
         }
-    }, [paused]) 
+    }, [paused]) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div>

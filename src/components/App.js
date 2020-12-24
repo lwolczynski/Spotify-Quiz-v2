@@ -6,7 +6,7 @@ import Main from './Main'
 import RouteHandler from './RouteHandler'
 import Login from './Login'
 import Footer from './Footer'
-import { checkAuth } from '../api/auth';
+import { checkAuth } from '../api/auth'
 
 const App = () => {
     const [authorized, setAuthorized] = useState(checkAuth())
