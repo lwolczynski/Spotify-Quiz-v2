@@ -1,18 +1,15 @@
-import React, { useState } from 'react'
-import { Redirect } from 'react-router-dom'
+import React from 'react'
+import { useHistory } from 'react-router-dom'
 
 const Tile = ({ img, name, tracks, playlistType }) => {
 
-    const [redirect, setRedirect] = useState(false)
-
-    const play = () => {
-        setRedirect(true)
-    }
+    const history = useHistory()
 
     return (
-        redirect ? <Redirect to={{ pathname: "/play", state: { playlistUrl: tracks, playlistName: name, playlistType } }} /> :
         <li className="album-tile">
-            <button onClick={play} className="album-tile-button button-transparent">
+            <button onClick={() => {
+                history.push({ pathname: '/', state: { playlistUrl: tracks, playlistName: name, playlistType }})
+            }} className="album-tile-button button-transparent">
                 <img src={img} alt={name} className="album-img" />
                 <span className="album-name">{name}</span>
             </button>

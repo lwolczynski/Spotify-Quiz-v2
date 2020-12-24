@@ -24,6 +24,7 @@ const Game = () => {
     const { startTimer, pauseTimer, resetTimer, printTimer } = useTimer()
     const { score, scoreAddPoint, scoreAddMistake, resetScore } = useScore()
 
+
     useEffect(() => {
         const execute = async () => {
             const fetchedTracks = await getAllTracks(location.state.playlistUrl, location.state.playlistType)
@@ -84,7 +85,9 @@ const Game = () => {
             <h1>{location.state.playlistName}</h1>
             <div className="row mb-2">
                 <div className="col-md-6">
-                    {(gameState !== 'init') ? <Track track={tracks[tracksOrder[currentTrackNo]]} paused={(gameState !== 'started')} /> : <Image className="game-album" src="/img/covers/no_cover.png" />}
+                    {(gameState !== 'init') ?
+                    <Track track={tracks[tracksOrder[currentTrackNo]]} paused={(gameState !== 'started')} /> :
+                    <Image className="game-album" src="/img/covers/no_cover.png" />}
                 </div>
                 <div className="col-md-6">
                     <h3>Your score: {score.correct}/{tracks.length}</h3>

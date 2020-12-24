@@ -1,9 +1,7 @@
 import React from 'react'
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Header = ({ children }) => {
-
-    const history = useHistory();
 
     return (
         <nav className="navbar navbar-light">
