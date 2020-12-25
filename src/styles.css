@@ -87,12 +87,7 @@ footer {
     width: 100%;
 }
 
-.game-album-animate {
-    animation-name: reveal;
-    animation-duration: 15s;
-}
-
-@keyframes reveal {
-    from {filter: opacity(0.1);}
-    to {filter: opacity(1);}
+.form-control:focus {
+    border-color: #ced4da;
+    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
 }
