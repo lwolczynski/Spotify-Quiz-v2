@@ -84,12 +84,12 @@ const Game = () => {
         <div className="container main">
             <h1>{location.state.playlistName}</h1>
             <div className="row mb-2">
-                <div className="col-sm-6 mb-1">
+                <div className="col-12 col-md-6 col-xl-5 mb-1">
                     {(gameState !== 'init') ?
                     <Track track={tracks[tracksOrder[currentTrackNo]]} paused={(gameState !== 'started')} /> :
                     <Image className="game-album" src="/img/covers/no_cover.png" />}
                 </div>
-                <div id="game-status" className="col-sm-6">
+                <div id="game-status" className="col-12 col-md-6 col-xl-7">
                     <h2>Your score: {score.correct}/{tracks.length}</h2>
                     <h2>{printTimer()}</h2>
                     <Controls gameState={gameState} setGameState={setGameState} />
