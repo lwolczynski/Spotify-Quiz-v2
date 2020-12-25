@@ -90,9 +90,13 @@ const Game = () => {
                     <Image className="game-album" src="/img/covers/no_cover_big.png" />}
                 </div>
                 <div id="game-status" className="col-12 col-md-6 col-xl-7">
-                    <h2>Your score: {score.correct}/{tracks.length}</h2>
-                    <h2>{printTimer()}</h2>
-                    <Controls gameState={gameState} setGameState={setGameState} />
+                    {tracks.length === 0 ?                     
+                    <h2>This playlist seems to empty...</h2> : 
+                    <>
+                        <h2>Your score: {score.correct}/{tracks.length}</h2>
+                        <h2>{printTimer()}</h2>
+                        <Controls gameState={gameState} setGameState={setGameState} />
+                    </>}
                 </div>
             </div>
             <div className="row">
