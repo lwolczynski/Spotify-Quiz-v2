@@ -1,5 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
 
 const Tile = ({ img, name, tracks, playlistType }) => {
 
@@ -7,12 +8,12 @@ const Tile = ({ img, name, tracks, playlistType }) => {
 
     return (
         <li className="album-tile">
-            <button onClick={() => {
+            <Button variant="light" onClick={() => {
                 history.push({ pathname: '/', state: { playlistUrl: tracks, playlistName: name, playlistType }})
-            }} className="album-tile-button button-transparent">
+            }} className="album-tile-button">
                 <img src={img} alt={name} className="album-img" />
                 <span className="album-name">{name}</span>
-            </button>
+            </Button>
         </li>
     )
 

@@ -93,8 +93,8 @@ footer {
 }
 
 .btn:focus, .btn:active {
-    border-color: #a5eeaf;
-    box-shadow: 0 0 0 0.2rem rgba(148, 199, 157, 0.5);
+    border-color: none;
+    box-shadow: none;
 }
 
 #game-status {
@@ -111,4 +111,9 @@ a, a:hover {
 
 .btn-auth, .btn-auth:hover {
     color: inherit;
+}
+
+.btn-light {
+    background-color: inherit;
+    border: none;
 }
