@@ -91,3 +91,11 @@ footer {
     border-color: #ced4da;
     box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
 }
+
+#game-status {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
