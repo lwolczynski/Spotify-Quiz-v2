@@ -99,3 +99,7 @@ footer {
     align-items: center;
     text-align: center;
 }
+
+a, a:hover {
+    color: #00d95f;
+}
