@@ -87,7 +87,7 @@ const Game = () => {
                 <div className="col-12 col-md-6 col-xl-5 mb-1">
                     {(gameState !== 'init') ?
                     <Track track={tracks[tracksOrder[currentTrackNo]]} paused={(gameState !== 'started')} /> :
-                    <Image className="game-album" src="/img/covers/no_cover.png" />}
+                    <Image className="game-album" src="/img/covers/no_cover_big.png" />}
                 </div>
                 <div id="game-status" className="col-12 col-md-6 col-xl-7">
                     <h2>Your score: {score.correct}/{tracks.length}</h2>
