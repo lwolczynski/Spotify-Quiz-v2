@@ -9,14 +9,14 @@ const Auth = ({ authorized, setAuthorized }) => {
             return null
         } else if (authorized) {
             return (
-                <Button variant="link" onClick={() => {
+                <Button variant="link" className="btn-auth" onClick={() => {
                     logout()
                     setAuthorized(false)
                 }}>Logout</Button>
             )
         } else {
             return (
-                <Button variant="link" onClick={() => {
+                <Button variant="link" className="btn-auth" onClick={() => {
                     window.location.href = loginUrl
                 }}>Login</Button>
             )
