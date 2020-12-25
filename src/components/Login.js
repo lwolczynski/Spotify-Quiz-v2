@@ -17,11 +17,11 @@ const Login = ({ setAuthorized }) => {
                 await login(code)
                 const profile = await getProfile()
                 window.localStorage.setItem('market', profile.country)
+                setAuthorized(true)
             } catch (err) {
                 // do nothing
             }
             setSigningIn(false)
-            setAuthorized(true)
         };
         execute();
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
