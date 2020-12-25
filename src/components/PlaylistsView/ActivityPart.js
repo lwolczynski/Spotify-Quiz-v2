@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Accordion, Card } from 'react-bootstrap'
 import Tile from './Tile'
+import Button from 'react-bootstrap/Button'
+
 import personalized_playlists from './PersonalizedPlaylists.js'
 
 const ActivityPart = ({ name, num, storage }) => {
@@ -39,7 +41,7 @@ const ActivityPart = ({ name, num, storage }) => {
         <Card>
             <Accordion.Toggle as={Card.Header} eventKey={num}>                
                 <h5 className="mb-0">
-                    <button className="btn btn-link">{name}</button>
+                    <Button variant="link">{name}</Button>
                 </h5>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={num}>

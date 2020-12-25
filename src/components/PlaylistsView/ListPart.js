@@ -4,6 +4,7 @@ import AccordionContext from 'react-bootstrap/AccordionContext'
 import { IconContext } from "react-icons"
 import { FaRedoAlt } from 'react-icons/fa'
 import Tile from './Tile'
+import Button from 'react-bootstrap/Button'
 import { getAllPlaylists } from '../../api/api.js'
 
 const ListPart = ({ name, num, storage, url }) => {
@@ -54,12 +55,12 @@ const ListPart = ({ name, num, storage, url }) => {
     return (
         <Card>
             <Accordion.Toggle as={Card.Header} eventKey={num}>                
-                <button className="btn btn-link">{name}</button>
-                <button onClick={(e) => refresh(e)} className="btn btn-link float-right">
+                <Button variant="link">{name}</Button>
+                <Button variant="link" onClick={(e) => refresh(e)} className="float-right">
                     <IconContext.Provider  value={{ style: { opacity: '0.5' } }}>
                         <FaRedoAlt />
                     </IconContext.Provider>
-                </button>
+                </Button>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={num}>
                 <ul className="card-body album-container">
