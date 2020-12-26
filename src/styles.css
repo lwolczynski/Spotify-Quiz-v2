@@ -81,15 +81,17 @@ footer {
     width: 100%;
 }
 
-.form-control:focus, .btn:focus {
+.btn:active, .btn:focus {
+    border-color: none;
+    box-shadow: none;
+}
+
+.form-control:focus, .btn-link:focus {
     border-color: #a5eeaf;
     box-shadow: 0 0 0 0.2rem rgba(148, 199, 157, 0.5);
 }
 
-.btn:active {
-    border-color: none;
-    box-shadow: none;
-}
+
 
 #game-status {
     display: flex;
