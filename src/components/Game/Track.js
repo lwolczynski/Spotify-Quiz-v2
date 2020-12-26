@@ -22,9 +22,7 @@ const Track = ({ track, paused }) => {
     }, [paused]) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div>
-            <Image className="game-album" src={track.album.images[0].url} />
-        </div>
+        <Image className="game-album" src={track.album.images[0].url} />
     )
 }
 

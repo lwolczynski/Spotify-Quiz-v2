@@ -111,3 +111,21 @@ a, a:hover {
     background-color: inherit;
     border: none;
 }
+
+.ratio-maintainer-wrapper {
+    background-color: #ffffff;
+    width: 100%;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+    position: relative; /* If you want text inside of it */
+}
+  
+/* If you want text inside of the container */
+.ratio-maintainer-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    align-items: center;
+    display: flex;
+}

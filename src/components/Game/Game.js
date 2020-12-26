@@ -85,9 +85,13 @@ const Game = () => {
             <h1>{location.state.playlistName}</h1>
             <div className="row mb-2">
                 <div className="col-12 col-md-6 col-xl-5 mb-1">
-                    {(gameState !== 'init') ?
-                    <Track track={tracks[tracksOrder[currentTrackNo]]} paused={(gameState !== 'started')} /> :
-                    <Image className="game-album" src="/img/covers/no_cover_big.png" />}
+                    <div className="ratio-maintainer-wrapper">
+                        <div className="ratio-maintainer-inner">
+                        {(gameState !== 'init') ?
+                            <Track track={tracks[tracksOrder[currentTrackNo]]} paused={(gameState !== 'started')} /> :
+                            <Image className="game-album" src="/img/covers/no_cover_big.png" />}
+                        </div>
+                    </div>
                 </div>
                 <div id="game-status" className="col-12 col-md-6 col-xl-7">
                     {tracks.length === 0 ?                     
