@@ -58,6 +58,9 @@ const Game = () => {
                 break
             case 'finished':
                 pauseTimer()
+                break
+            default:
+                break
         }
     }, [gameState]) // eslint-disable-line react-hooks/exhaustive-deps
 
