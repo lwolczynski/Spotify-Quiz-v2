@@ -116,10 +116,9 @@ a, a:hover {
     background-color: #ffffff;
     width: 100%;
     padding-top: 100%; /* 1:1 Aspect Ratio */
-    position: relative; /* If you want text inside of it */
+    position: relative;
 }
   
-/* If you want text inside of the container */
 .ratio-maintainer-inner {
     position: absolute;
     top: 0;
@@ -128,4 +127,32 @@ a, a:hover {
     right: 0;
     align-items: center;
     display: flex;
+}
+
+#landing-logo {
+    max-width: 70%;
+    max-height: 70%;
+}
+
+#landing-wrapper {
+    text-align: center;
+    padding-top: 0;
+}
+
+@media (min-width: 576px) {
+    #landing-wrapper {
+        padding-top: 75px;
+    }
+}
+
+#slogan {
+    position: relative;
+    bottom: 75px;
+    display: none;
+}
+
+@media (min-width: 576px) {
+    #slogan {
+        display: block;
+    }
 }
