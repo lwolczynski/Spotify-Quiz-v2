@@ -81,12 +81,12 @@ footer {
     width: 100%;
 }
 
-.form-control:focus {
+.form-control:focus, .btn:focus {
     border-color: #a5eeaf;
     box-shadow: 0 0 0 0.2rem rgba(148, 199, 157, 0.5);
 }
 
-.btn:focus, .btn:active {
+.btn:active {
     border-color: none;
     box-shadow: none;
 }
