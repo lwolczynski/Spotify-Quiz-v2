@@ -155,13 +155,13 @@ a, a:hover {
 
 @media (min-width: 576px) {
     #landing-wrapper {
-        padding-top: 75px;
+        padding-top: 95px;
     }
 }
 
 #slogan {
     position: relative;
-    bottom: 75px;
+    bottom: 95px;
     display: none;
 }
 

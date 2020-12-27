@@ -6,7 +6,7 @@ const Main = () => {
     const circleBottom = useRef();
 
     useEffect(() => {
-        new CircleType(circleBottom.current).radius(240).dir(-1)
+        new CircleType(circleBottom.current).radius(225).dir(-1)
     }, []);
 
     return (
