@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Route, Switch, BrowserRouter } from 'react-router-dom'
 import Header from './Header'
 import Auth from './Auth'
@@ -10,6 +10,17 @@ import { checkAuth } from '../api/auth'
 
 const App = () => {
     const [authorized, setAuthorized] = useState(checkAuth())
+
+    const appHeight = () => {
+        const doc = document.documentElement
+        doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+        console.log("!")
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', appHeight)
+        appHeight()
+    }, [])
 
     return (
         <BrowserRouter>
