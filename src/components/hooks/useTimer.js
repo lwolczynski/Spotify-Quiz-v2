@@ -25,8 +25,8 @@ const useTimer = () => {
     }
 
     const resetTimer = () => {
-        setTimer(0)
         setIsActive(false)
+        setTimer(0)
     }
 
     const printTimer = () => {
