@@ -1,5 +1,5 @@
-html, body {
-    height: 100%;
+#root {
+    min-height: 100vh;
 }
 
 body {
@@ -73,10 +73,6 @@ footer {
     flex: 1 0 auto;
 }
 
-.margin-right-short {
-    margin-right: 5px;
-}
-
 .game-album {
     width: 100%;
 }
@@ -90,8 +86,6 @@ footer {
     border-color: #a5eeaf;
     box-shadow: 0 0 0 0.2rem rgba(148, 199, 157, 0.5);
 }
-
-
 
 #game-status {
     display: flex;

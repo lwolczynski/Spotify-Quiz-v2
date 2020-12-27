@@ -24,7 +24,9 @@ const Auth = ({ authorized, setAuthorized }) => {
     }
 
     return (
-        <div id="auth_control">{renderAuthButton()}</div>
+        <>
+            {renderAuthButton()}
+        </>
     )
 }
 

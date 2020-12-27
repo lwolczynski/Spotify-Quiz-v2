@@ -8,6 +8,7 @@ import Track from './Track'
 import TrackList from './TrackList'
 import { getAllTracks } from '../../api/api.js'
 import { shuffleArray } from '../../utils/utils.js'
+import Container from 'react-bootstrap/Container'
 
 import Image from 'react-bootstrap/Image'
 
@@ -84,7 +85,7 @@ const Game = () => {
 
     return (
         tracks === null ? <Loader /> :        
-        <div className="container main">
+        <Container className="main">
             <h1>{location.state.playlistName}</h1>
             <div className="row mb-2">
                 <div className="col-12 col-md-6 col-xl-5 mb-1">
@@ -111,7 +112,7 @@ const Game = () => {
                     <TrackList tracks={tracks} disabled={(gameState !== 'started')} sendAnswer={answer} />
                 </div>
             </div>
-        </div>
+        </Container>
     )
 }
 
