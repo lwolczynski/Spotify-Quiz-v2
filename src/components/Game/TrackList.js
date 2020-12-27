@@ -9,8 +9,8 @@ const TrackList = ({ tracks, disabled, search, sendAnswer }) => {
 
     const renderTracks = () => {
         const searchRegex = new RegExp(search, "i")
-        return tracks.reduce((result, item) => {
-            return (searchRegex.test(item.name) || searchRegex.test(item.artists[0].name)) ? [...result, <Button className="mx-1 my-1" variant={item.answered ? (item.guessed ? "success" : "danger") : "outline-secondary"} disabled={item.answered || disabled ? true : false} onClick={() => answer({item})}>{item.name} by {item.artists[0].name}</Button>] : result
+        return tracks.reduce((result, item, index) => {
+            return (searchRegex.test(item.name) || searchRegex.test(item.artists[0].name)) ? [...result, <Button className="mx-1 my-1" key={index} variant={item.answered ? (item.guessed ? "success" : "danger") : "outline-secondary"} disabled={item.answered || disabled ? true : false} onClick={() => answer({item})}>{item.name} by {item.artists[0].name}</Button>] : result
         }, [])
     }
 
