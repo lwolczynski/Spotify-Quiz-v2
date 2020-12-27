@@ -77,6 +77,24 @@ footer {
     width: 100%;
 }
 
+/* addressing game button hover on mobile*/
+
+.btn-outline-secondary:hover {
+    color: inherit;
+    background-color: inherit;
+    border-color: inherit;
+}
+
+@media (hover: hover) {
+    .btn-outline-secondary:hover {
+        color: #fff;
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+}
+
+/* end of section */
+
 .btn:active, .btn:focus {
     border-color: none;
     box-shadow: none;
