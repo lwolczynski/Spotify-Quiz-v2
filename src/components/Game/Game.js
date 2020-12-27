@@ -42,7 +42,7 @@ const Game = () => {
         switch(gameState) {
             case 'init':
                 resetScore()
-                tracks.map(track => {
+                tracks.forEach(track => {
                     track.answered = null
                     track.guessed = null
                 })
