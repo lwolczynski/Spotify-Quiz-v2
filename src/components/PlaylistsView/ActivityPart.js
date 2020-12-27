@@ -30,7 +30,6 @@ const ActivityPart = ({ name, num, storage }) => {
 
         return playlists.map((item, index) => {
             const img = item.images[0].url
-            console.log(item.playlistType)
             return (
                 <Tile img={img} name={item.name} tracks={item.tracks.href} key={item.id} playlistType={item.playlistType} />
             )
