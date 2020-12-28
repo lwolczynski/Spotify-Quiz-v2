@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import useTimer from '../hooks/useTimer'
 import useScore from '../hooks/useScore'
-import useInput from '../hooks/useInput'
 import Loader from '../Loader'
 import Controls from './Controls'
 import Track from './Track'
@@ -25,8 +24,6 @@ const Game = () => {
 
     const { startTimer, pauseTimer, resetTimer, printTimer } = useTimer()
     const { score, scoreAddPoint, scoreAddMistake, resetScore } = useScore()
-    const { inputValue, setInputValue, showInput } = useInput()
-
 
     useEffect(() => {
         const execute = async () => {
@@ -83,7 +80,6 @@ const Game = () => {
             tracks[tracksOrder[currentTrackNo]].guessed = false
         }
         currentTrackNo === tracks.length-1 ? setGameState('finished') : setCurrentTrackNo(currentTrackNo+1)
-        setInputValue('')
     }
 
     return (
@@ -112,8 +108,7 @@ const Game = () => {
             </div>
             <div className="row">
                 <div className="col">
-                    {showInput()}
-                    <TrackList tracks={tracks} search={inputValue} disabled={(gameState !== 'started')} sendAnswer={answer} />
+                    <TrackList tracks={tracks} disabled={(gameState !== 'started')} sendAnswer={answer} />
                 </div>
             </div>
         </Container>
