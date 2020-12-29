@@ -16,7 +16,7 @@ Music quiz using Spotify music library. Play at **[spotiquiz.netlify.app](https:
 - Cleanup the mix of plain HTML layout with Bootstrap components
 - Stop game when music is stopped without the controls use (i.e. from Android/iPhone browser widget)
 
-## New features to be added
+### New features to be added
 - Add skipping to next and previous track functionality
 - Add album cover revealing animation
 
