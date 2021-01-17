@@ -24,7 +24,7 @@ const verifier = storedVerifier;
 const challenge = base64URLEncode(sha256(storedVerifier));
 const authorizeUrl = process.env.REACT_APP_AUTHORIZE_URL;
 const clientId = process.env.REACT_APP_CLIENT_ID;
-const redirectUrl = process.env.REACT_APP_REDIRECT_URL;
+const redirectUrl = window.location.protocol + "//" + window.location.hostname + process.env.REACT_APP_REDIRECT_URL;
 const tokenUrl = process.env.REACT_APP_TOKEN_URL;
 
 export const loginUrl =
