@@ -24,4 +24,4 @@ Music quiz using Spotify music library. Play at **[spotiquiz.netlify.app](https:
 - Soft keyboard overlays search field during game (only when using Chrome on iPhone)
 
 ## Check it out
-This project has been deployed online. You can find it [here](https://spotiquiz.netlify.app/).
+This project has been deployed online. You can find it [here](https://spotiquiz.online/).
