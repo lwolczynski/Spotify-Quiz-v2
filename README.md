@@ -1,6 +1,6 @@
 # SpotiQuiz
 ***How well do you know your music?***\
-Music quiz using Spotify music library. Play at **[spotiquiz.netlify.app](https://spotiquiz.netlify.app/)**
+Music quiz using Spotify music library. Play at **[spotiquiz.online](https://spotiquiz.online/)**
 
 ## Technologies and tools used
 - HTML + jS
