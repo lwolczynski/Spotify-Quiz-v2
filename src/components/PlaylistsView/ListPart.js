@@ -1,74 +1,76 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Accordion, Card } from 'react-bootstrap'
-import AccordionContext from 'react-bootstrap/AccordionContext'
-import { IconContext } from "react-icons"
-import { FaRedoAlt } from 'react-icons/fa'
-import Tile from './Tile'
-import Button from 'react-bootstrap/Button'
-import { getAllPlaylists } from '../../api/api.js'
+import React, { useState, useEffect, useContext } from 'react';
+import { Accordion, Card } from 'react-bootstrap';
+import AccordionContext from 'react-bootstrap/AccordionContext';
+import { IconContext } from 'react-icons';
+import { FaRedoAlt } from 'react-icons/fa';
+import Button from 'react-bootstrap/Button';
+import Tile from './Tile';
+import { getAllPlaylists } from '../../api/api';
 
 const ListPart = ({ name, num, storage, url }) => {
     const [playlists, setPlaylists] = useState(() => {
         try {
-            const savedData = window.localStorage.getItem(storage)
-            return JSON.parse(savedData).items
+            const savedData = window.localStorage.getItem(storage);
+            return JSON.parse(savedData).items;
         } catch (err) {
-            return []
+            return [];
         }
-    })
-    const accordionValue = useContext(AccordionContext)
-
-    useEffect(() => {
-        if (localStorage.getItem(storage) === null) fetchPlaylists()
-    }, [])  // eslint-disable-line react-hooks/exhaustive-deps
+    });
+    const accordionValue = useContext(AccordionContext);
 
     const fetchPlaylists = async () => {
-        const fetchedPlaylists = await getAllPlaylists(url)
+        const fetchedPlaylists = await getAllPlaylists(url);
         if (fetchedPlaylists) {
-            window.localStorage.setItem(storage, JSON.stringify(fetchedPlaylists))
-            setPlaylists(fetchedPlaylists.items)
+            window.localStorage.setItem(storage, JSON.stringify(fetchedPlaylists));
+            setPlaylists(fetchedPlaylists.items);
         }
-    }
+    };
+
+    useEffect(() => {
+        if (localStorage.getItem(storage) === null) fetchPlaylists();
+    }, []);
 
     const refresh = async (e) => {
         if (accordionValue === num) {
-            e.stopPropagation()
+            e.stopPropagation();
         }
-        fetchPlaylists()
-    }
+        fetchPlaylists();
+    };
 
-    const renderTiles = () => {
-
-        return playlists.map((item, index) => {
-            let img
+    const renderTiles = () =>
+        playlists.map((item) => {
+            let img;
             try {
-                img = item.images[0].url
+                img = item.images[0].url;
             } catch (err) {
-                img = "/img/covers/no_cover.png"
+                img = '/img/covers/no_cover.png';
             }
             return (
-                <Tile img={img} name={item.name} tracks={item.tracks.href} key={item.id} playlistType="regular" />
-            )
-        })
-    }
+                <Tile
+                    img={img}
+                    name={item.name}
+                    tracks={item.tracks.href}
+                    key={item.id}
+                    playlistType="regular"
+                />
+            );
+        });
 
     return (
         <Card>
-            <Accordion.Toggle as={Card.Header} eventKey={num}>                
+            <Accordion.Toggle as={Card.Header} eventKey={num}>
                 <Button variant="link">{name}</Button>
                 <Button variant="link" onClick={(e) => refresh(e)} className="float-right">
-                    <IconContext.Provider  value={{ style: { opacity: '0.5' } }}>
+                    <IconContext.Provider value={{ style: { opacity: '0.5' } }}>
                         <FaRedoAlt />
                     </IconContext.Provider>
                 </Button>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={num}>
-                <ul className="card-body album-container">
-                    {renderTiles()}
-                </ul>
+                <ul className="card-body album-container">{renderTiles()}</ul>
             </Accordion.Collapse>
         </Card>
-    )
-}
+    );
+};
 
-export default ListPart
+export default ListPart;

@@ -1,17 +1,12 @@
 import cryptoBrowserify from 'crypto-browserify';
 
-const scopes = 'user-top-read playlist-read-collaborative playlist-read-private user-read-private user-read-email user-read-recently-played';
+const scopes =
+    'user-top-read playlist-read-collaborative playlist-read-private user-read-private user-read-email user-read-recently-played';
 
-const base64URLEncode = str => {
-  return str.toString('base64')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=/g, '');
-};
+const base64URLEncode = (str) =>
+    str.toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 
-const sha256 = buffer => {
-    return cryptoBrowserify.createHash('sha256').update(buffer).digest();
-}
+const sha256 = (buffer) => cryptoBrowserify.createHash('sha256').update(buffer).digest();
 
 let storedVerifier = window.localStorage.getItem('verifier');
 if (storedVerifier === null) {
@@ -20,21 +15,19 @@ if (storedVerifier === null) {
     storedVerifier = newVerifier;
 }
 
-const verifier = storedVerifier; 
+const verifier = storedVerifier;
 const challenge = base64URLEncode(sha256(storedVerifier));
 const authorizeUrl = process.env.REACT_APP_AUTHORIZE_URL;
 const clientId = process.env.REACT_APP_CLIENT_ID;
-const redirectUrl = window.location.protocol + "//" + window.location.hostname + process.env.REACT_APP_REDIRECT_URL;
+const redirectUrl = `${window.location.protocol}//${window.location.hostname}${process.env.REACT_APP_REDIRECT_URL}`;
 const tokenUrl = process.env.REACT_APP_TOKEN_URL;
 
 export const loginUrl =
-    authorizeUrl +
-    '?response_type=code' +
-    '&code_challenge_method=S256' +
-    '&code_challenge='+ challenge +
-    '&client_id=' + clientId +
-    '&scope=' + encodeURIComponent(scopes) +
-    '&redirect_uri=' + redirectUrl
+    `${authorizeUrl}?response_type=code` +
+    `&code_challenge_method=S256` +
+    `&code_challenge=${challenge}&client_id=${clientId}&scope=${encodeURIComponent(
+        scopes
+    )}&redirect_uri=${redirectUrl}`;
 
 export const refreshTokens = async () => {
     const refreshToken = window.localStorage.getItem('refresh_token');
@@ -52,7 +45,7 @@ export const refreshTokens = async () => {
     window.localStorage.setItem('refresh_token', refresh_token);
 };
 
-export const login = async code => {
+export const login = async (code) => {
     const body = `grant_type=authorization_code&client_id=${clientId}&code_verifier=${verifier}&code=${code}&redirect_uri=${redirectUrl}`;
     const response = await fetch(tokenUrl, {
         method: 'POST',
@@ -68,15 +61,15 @@ export const login = async code => {
 };
 
 export const logout = async () => {
-  window.localStorage.removeItem('access_token');
-  window.localStorage.removeItem('refresh_token');
-  window.localStorage.removeItem('activity_playlists');
-  window.localStorage.removeItem('user_playlists');
-  window.localStorage.removeItem('top_playlists');
-  window.localStorage.removeItem('market');
+    window.localStorage.removeItem('access_token');
+    window.localStorage.removeItem('refresh_token');
+    window.localStorage.removeItem('activity_playlists');
+    window.localStorage.removeItem('user_playlists');
+    window.localStorage.removeItem('top_playlists');
+    window.localStorage.removeItem('market');
 };
 
 export const checkAuth = () => {
     const accessToken = window.localStorage.getItem('access_token');
-    return accessToken ? true : false
+    return !!accessToken;
 };

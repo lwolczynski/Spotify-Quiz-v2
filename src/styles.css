@@ -3,7 +3,12 @@ body {
     color: #475d5b;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: #00473e;
 }
 
@@ -30,7 +35,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .album-tile-button {
     width: 100%;
-	padding: 5px;
+    padding: 5px;
 }
 
 .album-tile-button:hover {
@@ -87,12 +92,14 @@ footer {
 
 /* end of section */
 
-.btn:active, .btn:focus {
+.btn:active,
+.btn:focus {
     border-color: none;
     box-shadow: none;
 }
 
-.form-control:focus, .btn-link:focus {
+.form-control:focus,
+.btn-link:focus {
     border-color: #a5eeaf;
     box-shadow: 0 0 0 0.2rem rgba(148, 199, 157, 0.5);
 }
@@ -105,11 +112,13 @@ footer {
     text-align: center;
 }
 
-a, a:hover {
+a,
+a:hover {
     color: #00d95f;
 }
 
-.btn-auth, .btn-auth:hover {
+.btn-auth,
+.btn-auth:hover {
     color: inherit;
 }
 
@@ -124,7 +133,7 @@ a, a:hover {
     padding-top: 100%; /* 1:1 Aspect Ratio */
     position: relative;
 }
-  
+
 .ratio-maintainer-inner {
     position: absolute;
     top: 0;
