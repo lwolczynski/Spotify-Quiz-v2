@@ -18,8 +18,7 @@ const getItems = async (url, initial, addMarket = false) => {
         },
     })
         .then((res) => res.data)
-        .catch(async (err) => {
-            console.log(err);
+        .catch(async () => {
             await refreshTokens();
             return getItems(url, initial, addMarket);
         });
