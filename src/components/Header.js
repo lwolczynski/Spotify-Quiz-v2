@@ -9,7 +9,7 @@ const Header = ({ children }) => (
                 <img
                     src="/favicon.ico"
                     width="30"
-                    heigth="30"
+                    height="30"
                     className="d-inline-block align-top"
                     alt=""
                 />{' '}

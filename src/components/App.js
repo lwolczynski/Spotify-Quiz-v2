@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Header from './Header';
 import Auth from './Auth';
@@ -9,8 +9,7 @@ import Login from './Login';
 import Footer from './Footer';
 import { checkAuth } from '../api/auth';
 
-ReactGA.initialize(process.env.REACT_APP_GA_ID);
-ReactGA.pageview(window.location.pathname + window.location.search);
+ReactGA.initialize(process.env.REACT_APP_GA_FOUR_ID);
 
 const appHeight = () => {
     const doc = document.documentElement;

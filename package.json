@@ -10,21 +10,21 @@
         "bootstrap": "^4.5.3",
         "circletype": "^2.3.0",
         "crypto-browserify": "^3.12.0",
-        "node-sass": "^4.14.1",
         "react": "^17.0.1",
         "react-bootstrap": "^1.4.0",
         "react-dom": "^17.0.1",
-        "react-ga": "^3.3.0",
+        "react-ga4": "^2.1.0",
         "react-icons": "^4.1.0",
         "react-router-dom": "^5.2.0",
-        "react-scripts": "4.0.1",
+        "react-scripts": "^5.0.1",
+        "sass": "^1.63.3",
         "web-vitals": "^0.2.4"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
+        "start": "react-app-rewired start",
+        "build": "react-app-rewired build",
+        "test": "react-app-rewired test",
+        "eject": "react-app-rewired eject",
         "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\""
     },
     "eslintConfig": {
@@ -46,6 +46,9 @@
         ]
     },
     "devDependencies": {
+        "assert": "^2.0.0",
+        "babel-eslint": "^10.1.0",
+        "buffer": "^6.0.3",
         "eslint": "^7.28.0",
         "eslint-config-airbnb": "^18.2.1",
         "eslint-config-prettier": "^8.3.0",
@@ -54,6 +57,13 @@
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-react": "^7.24.0",
         "eslint-plugin-react-hooks": "^4.2.0",
-        "prettier": "^2.3.1"
+        "https-browserify": "^1.0.0",
+        "os-browserify": "^0.3.0",
+        "prettier": "^2.3.1",
+        "process": "^0.11.10",
+        "react-app-rewired": "^2.2.1",
+        "stream-browserify": "^3.0.0",
+        "stream-http": "^3.2.0",
+        "url": "^0.11.1"
     }
 }
